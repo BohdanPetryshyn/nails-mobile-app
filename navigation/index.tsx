@@ -11,6 +11,11 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+import { useAppSelector } from '../common/store/hooks';
+import { selectIsLoggedIn } from '../auth/store/slice';
+import { LoginNavigation } from '../auth/navigation';
+import Login from '../auth/screens/Login';
+import SelectRole from '../auth/screens/SelectRole';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -34,9 +39,17 @@ export default function Navigation({
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      {isLoggedIn ? (
+        <Stack.Screen name="Root" component={BottomTabNavigator} />
+      ) : (
+        <>
+          <Stack.Screen name={'Login'} component={Login} />
+          <Stack.Screen name={'SelectRole'} component={SelectRole} />
+        </>
+      )}
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

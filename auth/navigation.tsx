@@ -10,7 +10,7 @@ type LoginStackParamList = {
 
 const Stack = createStackNavigator<LoginStackParamList>();
 
-export default function LoginNavigation() {
+export function LoginNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen name={'Login'} component={Login} />

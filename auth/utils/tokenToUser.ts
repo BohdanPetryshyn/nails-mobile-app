@@ -1,4 +1,4 @@
-import { Role, User } from '../entities/user';
+import { Role, User } from '../entities/User';
 
 export function tokenToUser(accessToken: string): User {
   return {

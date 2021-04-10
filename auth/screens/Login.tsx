@@ -1,11 +1,30 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, View } from '../../components/Themed';
+import { Button, StyleSheet } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+
+import { View } from '../../components/Themed';
+import { useAppDispatch } from '../../common/store/hooks';
+import loginWithGoogle from '../store/actions/loginWithGoogle';
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function () {
+  const dispatch = useAppDispatch();
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId:
+      '698921394069-pccjcjgp7iirh3127htoije5n8pknqk7.apps.googleusercontent.com',
+  });
+
+  React.useEffect(() => {
+    if (response?.type == 'success' && response.authentication?.accessToken) {
+      dispatch(loginWithGoogle(response.authentication.accessToken));
+    }
+  }, [response]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login Screen</Text>
+      <Button title="Login" onPress={() => promptAsync()} disabled={!request} />
     </View>
   );
 }

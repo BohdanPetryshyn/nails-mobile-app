@@ -34,5 +34,7 @@ export const selectAccessToken = (state: AppState): string | null | undefined =>
   selectAuthState(state).accessToken;
 export const selectUser = (state: AppState): User | null | undefined =>
   selectAuthState(state).user;
+export const selectIsLoggedIn = (state: AppState): boolean =>
+  Boolean(selectAccessToken(state));
 
 export const authReducer = authSlice.reducer;

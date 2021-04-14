@@ -14,8 +14,6 @@ import LinkingConfiguration from './LinkingConfiguration';
 import { useAppSelector } from '../common/store/hooks';
 import { selectIsLoggedIn } from '../auth/store/slice';
 import { LoginNavigation } from '../auth/navigation';
-import Login from '../auth/screens/Login';
-import SelectRole from '../auth/screens/SelectRole';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -45,10 +43,7 @@ function RootNavigator() {
       {isLoggedIn ? (
         <Stack.Screen name="Root" component={BottomTabNavigator} />
       ) : (
-        <>
-          <Stack.Screen name={'Login'} component={Login} />
-          <Stack.Screen name={'SelectRole'} component={SelectRole} />
-        </>
+        <Stack.Screen name="Login" component={LoginNavigation} />
       )}
       <Stack.Screen
         name="NotFound"

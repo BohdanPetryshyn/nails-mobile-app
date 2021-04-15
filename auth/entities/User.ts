@@ -6,5 +6,5 @@ export enum Role {
 export interface User {
   readonly firstName: string;
   readonly lastName: string;
-  readonly role: Role;
+  readonly role: Role | null;
 }

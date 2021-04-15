@@ -1,6 +1,6 @@
 import { Exclude, Expose } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
-import instantiateAndValidate from '../../common/validation/instantiate-and-validate';
+import instantiateAndValidate from '../../common/validation/instantiateAndValidate';
 
 @Exclude()
 export class AuthResponse {

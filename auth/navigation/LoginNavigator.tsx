@@ -1,12 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './screens/Login';
-import SelectRole from './screens/SelectRole';
-
-type LoginStackParamList = {
-  Login: undefined;
-  SelectRole: undefined;
-};
+import Login from '../screens/Login';
+import SelectRole from '../screens/SelectRole';
+import { LoginStackParamList } from './types';
 
 const Stack = createStackNavigator<LoginStackParamList>();
 

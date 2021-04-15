@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../entities/user';
+import { Role, User } from '../entities/user';
 import { tokenToUser } from '../utils/tokenToUser';
 import { AppState } from '../../common/store/types';
 
@@ -34,7 +34,9 @@ export const selectAccessToken = (state: AppState): string | null | undefined =>
   selectAuthState(state).accessToken;
 export const selectUser = (state: AppState): User | null | undefined =>
   selectAuthState(state).user;
+export const selectUserRole = (state: AppState): Role | null | undefined =>
+  selectUser(state)?.role;
 export const selectIsLoggedIn = (state: AppState): boolean =>
-  Boolean(selectAccessToken(state));
+  Boolean(selectUserRole(state));
 
 export const authReducer = authSlice.reducer;

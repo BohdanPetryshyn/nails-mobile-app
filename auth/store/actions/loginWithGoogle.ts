@@ -1,6 +1,6 @@
 import { AppThunk } from '../../../common/store/types';
-import { loginWithGoogleAccessToken } from '../../api/AuthService';
 import { accessTokenReceived } from '../slice';
+import { loginWithGoogleAccessToken } from '../../api/LoginService';
 
 export default (
   accessToken: string,

@@ -22,7 +22,6 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
     const optionalAccessToken = getAccessToken(response);
     if (optionalAccessToken) {
       dispatch(loginWithGoogle(optionalAccessToken)).then(() => {
-        console.log('NAVIGATING TO SELECT ROLE SCREEN');
         return navigation.navigate('SelectRole');
       });
     }

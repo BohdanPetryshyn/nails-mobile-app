@@ -21,6 +21,7 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
   React.useEffect(() => {
     const optionalAccessToken = getAccessToken(response);
     if (optionalAccessToken) {
+      console.log(optionalAccessToken);
       dispatch(loginWithGoogle(optionalAccessToken)).then(() => {
         return navigation.navigate('SelectRole');
       });

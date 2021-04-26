@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Role, User } from '../entities/user';
 import { tokenToUser } from '../utils/tokenToUser';
 import { AppState } from '../../common/store/types';
+import { classToPlain } from 'class-transformer';
 
 interface AuthState {
   accessToken?: string | null;
@@ -19,8 +20,10 @@ export const authSlice = createSlice({
       action: PayloadAction<{ accessToken: string | null }>,
     ) {
       const { accessToken } = action.payload;
+      const user = accessToken == null ? null : tokenToUser(accessToken);
+
       state.accessToken = accessToken;
-      state.user = accessToken == null ? null : tokenToUser(accessToken);
+      state.user = classToPlain(user) as User;
     },
   },
 });

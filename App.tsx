@@ -1,8 +1,10 @@
-import 'reflect-metadata';
+import 'core-js/es7/reflect';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider } from '@ui-kitten/components';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
@@ -25,12 +27,14 @@ export default function App() {
     store.dispatch(accessTokenReceived({ accessToken: accessToken.token }));
 
     return (
-      <Provider store={store}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
-      </Provider>
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <Provider store={store}>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </Provider>
+      </ApplicationProvider>
     );
   }
 }

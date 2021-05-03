@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
+import { Button, Icon, Text } from '@ui-kitten/components';
 
 import { useAppDispatch } from '../../common/store/hooks';
 import loginWithGoogle from '../store/actions/loginWithGoogle';
 import { LoginStackParamList } from '../navigation/types';
+import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -29,26 +30,24 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
   }, [response]);
 
   return (
-    <Layout style={{ flex: 1 }}>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title} category="h1">
-          AnyNails
-        </Text>
-        <Button
-          size="large"
-          onPress={() => promptAsync()}
-          disabled={!request}
-          accessoryLeft={props => <Icon name={'google'} {...props} />}
-        >
-          Sign in with Google
-        </Button>
-        <Text style={styles.licenceText}>
-          Реєструючись, Ви підтверджуєте свою згоду на обробку персональних
-          даних, а також підтверджуєте те, що ознайомились та погоджуєтесь з
-          Угодою користувача та Згодою на збір та обробку персональних даних
-        </Text>
-      </SafeAreaView>
-    </Layout>
+    <SafeAreaLayout style={styles.container}>
+      <Text style={styles.title} category="h1">
+        AnyNails
+      </Text>
+      <Button
+        size="large"
+        onPress={() => promptAsync()}
+        disabled={!request}
+        accessoryLeft={props => <Icon name={'google'} {...props} />}
+      >
+        Sign in with Google
+      </Button>
+      <Text style={styles.licenceText}>
+        Реєструючись, Ви підтверджуєте свою згоду на обробку персональних даних,
+        а також підтверджуєте те, що ознайомились та погоджуєтесь з Угодою
+        користувача та Згодою на збір та обробку персональних даних
+      </Text>
+    </SafeAreaLayout>
   );
 }
 
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    margin: 5,
   },
   title: {
     marginTop: 20,

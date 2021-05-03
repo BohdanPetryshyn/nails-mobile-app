@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Button, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Button, Layout, Text } from '@ui-kitten/components';
 
-import { View } from '../../components/Themed';
 import { useAppDispatch } from '../../common/store/hooks';
 import loginWithGoogle from '../store/actions/loginWithGoogle';
 import { LoginStackParamList } from '../navigation/types';
@@ -29,9 +29,21 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
   }, [response]);
 
   return (
-    <View style={styles.container}>
-      <Button title="Login" onPress={() => promptAsync()} disabled={!request} />
-    </View>
+    <Layout style={{ flex: 1 }}>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.title} category="h1">
+          AnyNails
+        </Text>
+        <Button size="large" onPress={() => promptAsync()} disabled={!request}>
+          Sign in with Google
+        </Button>
+        <Text style={styles.licenceText}>
+          Реєструючись, Ви підтверджуєте свою згоду на обробку персональних
+          даних, а також підтверджуєте те, що ознайомились та погоджуєтесь з
+          Угодою користувача та Згодою на збір та обробку персональних даних
+        </Text>
+      </SafeAreaView>
+    </Layout>
   );
 }
 
@@ -39,16 +51,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    margin: 5,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    marginTop: 20,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  licenceText: {
+    textAlign: 'center',
   },
 });
 

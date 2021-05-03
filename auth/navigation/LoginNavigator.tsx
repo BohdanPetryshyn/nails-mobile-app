@@ -8,7 +8,7 @@ const Stack = createStackNavigator<LoginStackParamList>();
 
 export function LoginNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator headerMode={'none'}>
       <Stack.Screen name={'Login'} component={Login} />
       <Stack.Screen name={'SelectRole'} component={SelectRole} />
     </Stack.Navigator>

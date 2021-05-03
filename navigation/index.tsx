@@ -14,6 +14,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import { useAppSelector } from '../common/store/hooks';
 import { selectIsLoggedIn } from '../auth/store/slice';
 import { LoginNavigator } from '../auth/navigation/LoginNavigator';
+import { Layout } from '@ui-kitten/components';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started

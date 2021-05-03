@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Button, Layout, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 
 import { useAppDispatch } from '../../common/store/hooks';
 import loginWithGoogle from '../store/actions/loginWithGoogle';
@@ -34,7 +34,12 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
         <Text style={styles.title} category="h1">
           AnyNails
         </Text>
-        <Button size="large" onPress={() => promptAsync()} disabled={!request}>
+        <Button
+          size="large"
+          onPress={() => promptAsync()}
+          disabled={!request}
+          accessoryLeft={props => <Icon name={'google'} {...props} />}
+        >
           Sign in with Google
         </Button>
         <Text style={styles.licenceText}>

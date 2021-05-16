@@ -1,14 +1,11 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Text } from '@ui-kitten/components';
-import { useDispatch } from 'react-redux';
-import selectRole from '../store/actions/selectRole';
-import { Role } from '../entities/User';
+import { Text } from '@ui-kitten/components';
 import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
 import { RoleButton } from '../components/RoleButton';
+import { Role } from '../entities/Payload';
 
 export default function () {
-  const dispatch = useDispatch();
   return (
     <SafeAreaLayout style={styles.container}>
       <Text category="h5" status="primary" style={styles.text}>

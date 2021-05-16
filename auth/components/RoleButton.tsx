@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from '@ui-kitten/components';
 import selectRole from '../store/actions/selectRole';
-import { Role } from '../entities/User';
+import { Role } from '../entities/Payload';
 
 export function RoleButton({ role, text }: { role: Role; text: string }) {
   const dispatch = useDispatch();

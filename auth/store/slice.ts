@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Role, User } from '../entities/user';
-import { tokenToUser } from '../utils/tokenToUser';
 import { AppState } from '../../common/store/types';
-import { classToPlain } from 'class-transformer';
+import { Payload, Role } from '../entities/Payload';
 
 interface AuthState {
   accessToken?: string | null;
-  user?: User | null;
+  payload?: Payload | null;
 }
 
 const initialState: AuthState = {};
@@ -20,10 +18,10 @@ export const authSlice = createSlice({
       action: PayloadAction<{ accessToken: string | null }>,
     ) {
       const { accessToken } = action.payload;
-      const user = accessToken == null ? null : tokenToUser(accessToken);
+      const payload = accessToken && Payload.fromAccessToken(accessToken);
 
       state.accessToken = accessToken;
-      state.user = classToPlain(user) as User;
+      state.payload = (payload && payload.toPlain()) || null;
     },
   },
 });
@@ -35,10 +33,11 @@ export const selectAuthState = (state: AppState) => {
 };
 export const selectAccessToken = (state: AppState): string | null | undefined =>
   selectAuthState(state).accessToken;
-export const selectUser = (state: AppState): User | null | undefined =>
-  selectAuthState(state).user;
+export const selectAccessTokenPayload = (
+  state: AppState,
+): Payload | null | undefined => selectAuthState(state).payload;
 export const selectUserRole = (state: AppState): Role | null | undefined =>
-  selectUser(state)?.role;
+  selectAccessTokenPayload(state)?.role;
 export const selectIsLoggedIn = (state: AppState): boolean =>
   Boolean(selectUserRole(state));
 

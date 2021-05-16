@@ -1,6 +1,6 @@
 import authenticatedClient from '../../common/api/authenticatedClient';
-import { Role } from '../entities/User';
 import { AuthResponse } from '../entities/AuthResponse';
+import { Role } from '../entities/Payload';
 
 const BASE_PATH = '/role';
 

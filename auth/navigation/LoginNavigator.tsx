@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../screens/Login';
 import SelectRole from '../screens/SelectRole';
 import { LoginStackParamList } from './types';
+import FillUserData from '../screens/FillUserData';
 
 const Stack = createStackNavigator<LoginStackParamList>();
 
@@ -11,6 +12,7 @@ export function LoginNavigator() {
     <Stack.Navigator headerMode={'none'}>
       <Stack.Screen name={'Login'} component={Login} />
       <Stack.Screen name={'SelectRole'} component={SelectRole} />
+      <Stack.Screen name={'FillUserData'} component={FillUserData} />
     </Stack.Navigator>
   );
 }

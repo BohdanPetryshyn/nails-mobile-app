@@ -34,7 +34,7 @@ export default function ({
       {...selectProps}
     >
       {CITIES.map(city => (
-        <SelectItem title={CITY_LABELS[city]} />
+        <SelectItem title={CITY_LABELS[city]} key={city} />
       ))}
     </Select>
   );

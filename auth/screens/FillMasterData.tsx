@@ -5,12 +5,26 @@ import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
 import { LoginStackParamList } from '../navigation/types';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from '@ui-kitten/components';
+import { useAppDispatch } from '../../common/store/hooks';
+import { MasterData } from '../../user/entities/master-data';
+import selectRole from '../store/actions/selectRole';
+import { Role } from '../entities/Payload';
 
 export default function ({ route }: { route: FillMasterDataRouteProp }) {
+  const dispatch = useAppDispatch();
   const [address, setAddress] = useState<string>();
 
   const masterDataFilled = () => {
     return Boolean(address);
+  };
+
+  const submit = () => {
+    const masterData = new MasterData({
+      ...route.params.userData,
+      address: address!,
+    });
+
+    dispatch(selectRole(Role.MASTER, masterData));
   };
 
   return (
@@ -25,7 +39,11 @@ export default function ({ route }: { route: FillMasterDataRouteProp }) {
           style={styles.input}
         />
       </View>
-      <Button disabled={!masterDataFilled()} style={styles.submit}>
+      <Button
+        onPress={submit}
+        disabled={!masterDataFilled()}
+        style={styles.submit}
+      >
         Продовжити
       </Button>
     </SafeAreaLayout>

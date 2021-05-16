@@ -10,6 +10,9 @@ import { RouteProp } from '@react-navigation/native';
 import { LoginStackParamList } from '../navigation/types';
 import { UserData } from '../../user/entities/user-data';
 import { Role } from '../entities/Payload';
+import { useAppDispatch } from '../../common/store/hooks';
+import selectRole from '../store/actions/selectRole';
+import { ClientData } from '../../user/entities/client-data';
 
 export default function ({
   navigation,
@@ -18,6 +21,7 @@ export default function ({
   navigation: NavigationProp;
   route: FillUserDataRouteProp;
 }) {
+  const dispatch = useAppDispatch();
   const [city, setCity] = useState<City>();
 
   const userDataFilled = () => {
@@ -26,8 +30,11 @@ export default function ({
 
   const navigateToMasterDataFillScreenOrSubmit = () => {
     const userData = new UserData({ city: city! });
-    if (route.params.userRole === Role.MASTER) {
+    const userRole = route.params.userRole;
+    if (userRole === Role.MASTER) {
       navigation.navigate('FillMasterData', { userData });
+    } else if (userRole === Role.CLIENT) {
+      dispatch(selectRole(Role.CLIENT, new ClientData(userData)));
     }
   };
 

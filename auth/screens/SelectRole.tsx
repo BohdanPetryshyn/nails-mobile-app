@@ -1,27 +1,45 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '@ui-kitten/components';
+import { Button, ButtonProps, Text } from '@ui-kitten/components';
 import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
-import { RoleButton } from '../components/RoleButton';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LoginStackParamList } from '../navigation/types';
+import { Role } from '../entities/Payload';
 
 export default function ({ navigation }: { navigation: NavigationProp }) {
+  const navigateToUserDataFillScreen = (userRole: Role) => {
+    navigation.navigate('FillUserData', { userRole });
+  };
+
   return (
     <SafeAreaLayout style={styles.container}>
       <Text category="h5" style={styles.title}>
         Хто Ви?
       </Text>
       <View style={styles.optionsContainer}>
-        <RoleButton text="Клієнт" />
-        <RoleButton
-          onPress={() => navigation.navigate('FillUserData')}
-          text="Майстер"
-        />
+        <RoleButton onPress={() => navigateToUserDataFillScreen(Role.CLIENT)}>
+          Клієнт
+        </RoleButton>
+        <RoleButton onPress={() => navigateToUserDataFillScreen(Role.MASTER)}>
+          Майстер
+        </RoleButton>
       </View>
     </SafeAreaLayout>
   );
 }
+
+const RoleButton: FC<ButtonProps> = ({ children, ...buttonProps }) => {
+  return (
+    <Button
+      size="giant"
+      appearance="outline"
+      style={styles.button}
+      {...buttonProps}
+    >
+      {children}
+    </Button>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: { marginBottom: 15 },
+  button: { margin: 10, width: '50%' },
 });
 
 type NavigationProp = StackNavigationProp<LoginStackParamList, 'SelectRole'>;

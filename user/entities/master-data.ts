@@ -1,11 +1,20 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { UserData, UserDataConstructorParams } from './user-data';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-type MasterDataConstructorParams = UserDataConstructorParams;
+interface MasterDataConstructorParams extends UserDataConstructorParams {
+  address: string;
+}
 
 @Exclude()
 export class MasterData extends UserData {
-  constructor({ city, bio }: MasterDataConstructorParams) {
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  address: string;
+
+  constructor({ city, bio, address }: MasterDataConstructorParams) {
     super({ city, bio });
+    this.address = address;
   }
 }

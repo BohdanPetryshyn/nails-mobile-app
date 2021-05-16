@@ -4,7 +4,7 @@ import { City } from './city';
 
 export interface UserDataConstructorParams {
   city: City;
-  bio: string;
+  bio?: string;
 }
 
 @Exclude()
@@ -16,7 +16,7 @@ export class UserData {
   @Expose()
   @IsString()
   @IsNotEmpty()
-  bio: string;
+  bio?: string;
 
   constructor({ city, bio }: UserDataConstructorParams) {
     this.city = city;

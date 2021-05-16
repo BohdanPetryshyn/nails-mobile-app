@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import * as SecureStoreService from '../device/SecureStoreService';
+import { SecureStoreService } from '../device/SecureStoreService';
 
 export default function (): { ready: boolean; token: string | null } {
   const [ready, setReady] = useState(__DEV__);

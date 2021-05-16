@@ -6,11 +6,13 @@ import { MasterData } from '../../user/entities/master-data';
 
 const BASE_PATH = '/role';
 
-export async function selectRole(
-  role: Role,
-  userData: ClientData | MasterData,
-): Promise<AuthResponse> {
-  const url = `${BASE_PATH}/select`;
-  const response = await authenticatedClient.post(url, { role, userData });
-  return AuthResponse.fromPlain(response.data);
+export class RolesService {
+  static async selectRole(
+    role: Role,
+    userData: ClientData | MasterData,
+  ): Promise<AuthResponse> {
+    const url = `${BASE_PATH}/select`;
+    const response = await authenticatedClient.post(url, { role, userData });
+    return AuthResponse.fromPlain(response.data);
+  }
 }

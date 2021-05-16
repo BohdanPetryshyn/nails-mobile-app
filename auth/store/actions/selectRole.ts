@@ -1,6 +1,6 @@
 import { AppThunk } from '../../../common/store/types';
-import * as RolesService from '../../api/RolesService';
-import * as SecureStoreService from '../../device/SecureStoreService';
+import { RolesService } from '../../api/RolesService';
+import { SecureStoreService } from '../../device/SecureStoreService';
 import { accessTokenReceived } from '../slice';
 import { Role } from '../../entities/Payload';
 import { ClientData } from '../../../user/entities/client-data';

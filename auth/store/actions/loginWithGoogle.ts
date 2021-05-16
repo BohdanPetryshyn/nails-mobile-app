@@ -1,7 +1,7 @@
 import { AppThunk } from '../../../common/store/types';
 import { accessTokenReceived } from '../slice';
-import * as LoginService from '../../api/LoginService';
-import * as SecureStoreService from '../../device/SecureStoreService';
+import { LoginService } from '../../api/LoginService';
+import { SecureStoreService } from '../../device/SecureStoreService';
 
 export default (
   googleAccessToken: string,

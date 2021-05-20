@@ -5,7 +5,7 @@ import { Layout } from '@ui-kitten/components';
 
 export const SafeAreaLayout: FC<ViewProps> = props => {
   return (
-    <Layout style={{ flex: 1, padding: 3 }}>
+    <Layout style={{ flex: 1 }}>
       <SafeAreaView {...props} />
     </Layout>
   );

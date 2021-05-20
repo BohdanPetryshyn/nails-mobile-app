@@ -19,8 +19,12 @@ export default function ({ route }: { route: FillMasterDataRouteProp }) {
     new ServiceBlank({}),
   ]);
 
+  const servicesFilled = () => {
+    return !services.some(service => service.isNotFilled());
+  };
+
   const masterDataFilled = () => {
-    return Boolean(address);
+    return Boolean(address) && servicesFilled();
   };
 
   const submit = () => {

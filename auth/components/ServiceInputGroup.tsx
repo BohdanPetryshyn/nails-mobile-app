@@ -70,6 +70,14 @@ export class ServiceBlank {
     return new ServiceBlank({ ...this, price });
   }
 
+  isFilled() {
+    return Boolean(this.serviceType && this.price);
+  }
+
+  isNotFilled() {
+    return !this.isFilled();
+  }
+
   toService() {
     return new Service({ serviceType: this.serviceType!, price: this.price! });
   }

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 });
 
 function stringAmountToCents(value: string) {
-  const [units, cents] = value.split('.');
+  const [units, cents] = value.split(/[\.,]/);
   const centsNormalized = cents && cents.substring(0, 2);
 
   return Number(units) * 100 + Number(centsNormalized);

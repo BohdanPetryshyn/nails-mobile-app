@@ -10,16 +10,15 @@ export default function ({
   amount?: number;
   onAmountChange: (amount: number) => void;
 } & InputProps) {
-  const stringAmount = (amount && centsToStringAmount(amount)) || undefined;
-  const onChange = (value: string) => {
-    onAmountChange(stringAmountToCents(value));
+  const stringAmount = amount ? String(amount) : '';
+  const onChange = (newAmount: string) => {
+    onAmountChange(Number(newAmount));
   };
-
   return (
     <Input
       value={stringAmount}
       onChangeText={onChange}
-      keyboardType="decimal-pad"
+      keyboardType="number-pad"
       style={styles.input}
       {...inputProps}
     />
@@ -31,17 +30,3 @@ const styles = StyleSheet.create({
     width: 100,
   },
 });
-
-function stringAmountToCents(value: string) {
-  const [units, cents] = value.split(/[\.,]/);
-  const centsNormalized = cents && cents.substring(0, 2);
-
-  return Number(units) * 100 + Number(centsNormalized);
-}
-
-function centsToStringAmount(cents: number): string {
-  const units = Math.floor(cents / 100);
-  const resultCents = cents % (units * 100);
-
-  return `${units}.${resultCents}`;
-}

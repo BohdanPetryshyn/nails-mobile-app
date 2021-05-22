@@ -13,6 +13,8 @@ import { Role } from '../entities/Payload';
 import { useAppDispatch } from '../../common/store/hooks';
 import selectRole from '../store/actions/selectRole';
 import { ClientData } from '../../user/entities/client-data';
+import useDefaultUserData from '../hooks/useDefaultUserData';
+import ScreenLoader from '../../common/components/ScreenLoader';
 
 export default function ({
   navigation,
@@ -22,14 +24,27 @@ export default function ({
   route: FillUserDataRouteProp;
 }) {
   const dispatch = useAppDispatch();
-  const [city, setCity] = useState<City>();
+
+  const [userDataBlank, setUserData] = useDefaultUserData();
+
+  if (!userDataBlank) {
+    return <ScreenLoader />;
+  }
+
+  const setCity = (city: City) => {
+    setUserData(userDataBlank.withCity(city));
+  };
+
+  const setProfilePhoto = (profilePhoto: string) => {
+    setUserData(userDataBlank.withProfilePhoto(profilePhoto));
+  };
 
   const userDataFilled = () => {
-    return Boolean(city);
+    return userDataBlank.isFilled();
   };
 
   const navigateToMasterDataFillScreenOrSubmit = () => {
-    const userData = new UserData({ city: city! });
+    const userData = userDataBlank.toUserData();
     const userRole = route.params.userRole;
     if (userRole === Role.MASTER) {
       navigation.navigate('FillMasterData', { userData });
@@ -43,7 +58,7 @@ export default function ({
       <Text category="h5">Додайте деталей...</Text>
       <View style={styles.inputsContainer}>
         <CitySelect
-          selectedCity={city}
+          selectedCity={userDataBlank.city}
           onCitySelect={setCity}
           label="Місто"
           placeholder="Оберіть місто"

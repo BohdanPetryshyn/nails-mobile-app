@@ -13,7 +13,5 @@ export default (
 
   await SecureStoreService.setAccessToken(accessToken);
 
-  await dispatch(
-    accessTokenReceived({ accessToken: authResponse.accessToken }),
-  );
+  dispatch(accessTokenReceived({ accessToken: authResponse.accessToken }));
 };

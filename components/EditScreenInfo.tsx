@@ -55,7 +55,7 @@ function handleHelpPress() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  detailsContainer: {
     flex: 1,
     backgroundColor: '#fff',
   },

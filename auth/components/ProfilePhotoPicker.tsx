@@ -21,7 +21,7 @@ export default function ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.detailsContainer}>
       <Avatar source={{ uri: photoUri }} style={styles.avatar} />
       <Button onPress={tryPickPhoto} appearance="ghost">
         Змінити
@@ -31,7 +31,7 @@ export default function ({
 }
 
 const styles = StyleSheet.create({
-  container: {
+  detailsContainer: {
     alignItems: 'center',
   },
   avatar: {

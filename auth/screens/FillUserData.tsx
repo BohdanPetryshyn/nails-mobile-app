@@ -64,7 +64,7 @@ export default function ({
     <SafeAreaLayout style={{ flex: 1 }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={styles.detailsContainer}
       >
         <Text category="h5" style={styles.title}>
           Додайте деталей...
@@ -109,7 +109,7 @@ export default function ({
 }
 
 const styles = StyleSheet.create({
-  container: {
+  detailsContainer: {
     alignItems: 'center',
   },
   title: {

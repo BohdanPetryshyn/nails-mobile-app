@@ -5,6 +5,7 @@ import { ServiceType } from './service-type';
 interface ServiceConstructorParams {
   serviceType: ServiceType;
   price: number;
+  duration: number;
 }
 
 @Exclude()
@@ -17,8 +18,13 @@ export class Service {
   @IsInt()
   price: number;
 
-  constructor({ serviceType, price }: ServiceConstructorParams) {
+  @Expose()
+  @IsInt()
+  duration: number;
+
+  constructor({ serviceType, price, duration }: ServiceConstructorParams) {
     this.serviceType = serviceType;
     this.price = price;
+    this.duration = duration;
   }
 }

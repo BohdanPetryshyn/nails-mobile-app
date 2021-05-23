@@ -6,7 +6,7 @@ import { Text, View } from '../components/Themed';
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
+    <View style={styles.detailsContainer}>
       <Text style={styles.title}>Tab One</Text>
       <View
         style={styles.separator}
@@ -19,7 +19,7 @@ export default function TabOneScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  detailsContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

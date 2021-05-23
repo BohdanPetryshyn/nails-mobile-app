@@ -23,7 +23,7 @@ export default function ({
 
   return (
     <View {...viewProps}>
-      <View style={styles.container}>
+      <View style={styles.detailsContainer}>
         {services.map((service, index) => (
           <ServiceInputGroup
             service={service}
@@ -46,7 +46,7 @@ export default function ({
 const StarIcon = (props: IconProps) => <Icon {...props} name="plus-outline" />;
 
 const styles = StyleSheet.create({
-  container: {
+  detailsContainer: {
     alignItems: 'center',
   },
   serviceInput: {

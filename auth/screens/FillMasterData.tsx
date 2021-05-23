@@ -41,7 +41,7 @@ export default function ({ route }: { route: FillMasterDataRouteProp }) {
     <SafeAreaLayout style={{ flex: 1 }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={styles.detailsContainer}
       >
         <Text category="h5" style={styles.title}>
           Клієнти хотітимуть знати про вас більше...
@@ -73,7 +73,7 @@ export default function ({ route }: { route: FillMasterDataRouteProp }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  detailsContainer: {
     alignItems: 'center',
   },
   title: {

@@ -30,7 +30,7 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
   }, [response]);
 
   return (
-    <SafeAreaLayout style={styles.container}>
+    <SafeAreaLayout style={styles.detailsContainer}>
       <Text style={styles.title} category="h1">
         AnyNails
       </Text>
@@ -52,7 +52,7 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  detailsContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',

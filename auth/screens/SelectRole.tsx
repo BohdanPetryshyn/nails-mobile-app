@@ -12,7 +12,7 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
   };
 
   return (
-    <SafeAreaLayout style={styles.container}>
+    <SafeAreaLayout style={styles.detailsContainer}>
       <Text category="h5" style={styles.title}>
         Хто Ви?
       </Text>
@@ -42,7 +42,7 @@ const RoleButton: FC<ButtonProps> = ({ children, ...buttonProps }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  detailsContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',

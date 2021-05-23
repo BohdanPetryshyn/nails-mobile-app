@@ -7,14 +7,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 
-import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import { useAppSelector } from '../common/store/hooks';
 import { selectIsLoggedIn } from '../auth/store/slice';
 import { LoginNavigator } from '../auth/navigation/LoginNavigator';
-import { Layout } from '@ui-kitten/components';
+import { RootStackParamList } from './types';
+import NotFoundScreen from '../common/screens/NotFoundScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started

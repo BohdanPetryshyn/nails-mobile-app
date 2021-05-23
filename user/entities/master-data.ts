@@ -26,8 +26,10 @@ export class MasterData extends UserData {
     profilePhoto,
     address,
     services,
+    firstName,
+    lastName,
   }: MasterDataConstructorParams) {
-    super({ city, bio, profilePhoto });
+    super({ city, bio, profilePhoto, firstName, lastName });
     this.address = address;
     this.services = services;
   }

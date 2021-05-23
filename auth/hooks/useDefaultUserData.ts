@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { AuthService } from '../api/AuthService';
 import { City } from '../../user/entities/city';
 import { UserData } from '../../user/entities/user-data';
+import { Expose } from 'class-transformer';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export default function (): [
   UserDataBlank | undefined,
@@ -33,18 +35,28 @@ class UserDataBlank {
 
   profilePhoto: string;
 
+  firstName: string;
+
+  lastName: string;
+
   constructor({
     city,
     bio,
     profilePhoto,
+    firstName,
+    lastName,
   }: {
     city?: City;
     bio?: string;
     profilePhoto: string;
+    firstName: string;
+    lastName: string;
   }) {
     this.city = city;
     this.bio = bio;
     this.profilePhoto = profilePhoto;
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 
   isFilled(): boolean {
@@ -55,7 +67,6 @@ class UserDataBlank {
     return new UserData({
       ...this,
       city: this.city!,
-      profilePhoto: this.profilePhoto!,
     });
   }
 
@@ -70,6 +81,20 @@ class UserDataBlank {
     return new UserDataBlank({
       ...this,
       profilePhoto,
+    });
+  }
+
+  withFirstName(firstName: string): UserDataBlank {
+    return new UserDataBlank({
+      ...this,
+      firstName,
+    });
+  }
+
+  withLastName(lastName: string): UserDataBlank {
+    return new UserDataBlank({
+      ...this,
+      lastName,
     });
   }
 }

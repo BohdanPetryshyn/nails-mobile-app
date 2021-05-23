@@ -17,7 +17,7 @@ export default function ({
       onValueSelect={onCitySelect}
       enumValues={City}
       enumLabels={CITY_LABELS}
-      {...selectedCity}
+      {...selectProps}
     />
   );
 }

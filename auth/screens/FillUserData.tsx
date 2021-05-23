@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Button, Text } from '@ui-kitten/components';
+import { Button, Input, Text } from '@ui-kitten/components';
 import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import CitySelect from '../components/CitySelect';
 import { City } from '../../user/entities/city';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { LoginStackParamList } from '../navigation/types';
-import { UserData } from '../../user/entities/user-data';
 import { Role } from '../entities/Payload';
 import { useAppDispatch } from '../../common/store/hooks';
 import selectRole from '../store/actions/selectRole';
@@ -40,6 +38,14 @@ export default function ({
     setUserData(userDataBlank.withProfilePhoto(profilePhoto));
   };
 
+  const setFirstName = (firstName: string) => {
+    setUserData(userDataBlank.withFirstName(firstName));
+  };
+
+  const setLastName = (lastName: string) => {
+    setUserData(userDataBlank.withLastName(lastName));
+  };
+
   const userDataFilled = () => {
     return userDataBlank.isFilled();
   };
@@ -55,45 +61,72 @@ export default function ({
   };
 
   return (
-    <SafeAreaLayout style={styles.container}>
-      <Text category="h5">Додайте деталей...</Text>
-      <View style={styles.inputsContainer}>
-        <ProfilePhotoPicker
-          photoUri={userDataBlank.profilePhoto}
-          onPhotoUriChange={setProfilePhoto}
-        />
-        <CitySelect
-          selectedCity={userDataBlank.city}
-          onCitySelect={setCity}
-          label="Місто"
-          placeholder="Оберіть місто"
-          style={styles.input}
-        />
-      </View>
-      <Button
-        onPress={navigateToMasterDataFillScreenOrSubmit}
-        disabled={!userDataFilled()}
-        style={styles.submit}
+    <SafeAreaLayout style={{ flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}
       >
-        Продовжити
-      </Button>
+        <Text category="h5" style={styles.title}>
+          Додайте деталей...
+        </Text>
+        <View style={styles.inputsContainer}>
+          <ProfilePhotoPicker
+            photoUri={userDataBlank.profilePhoto}
+            onPhotoUriChange={setProfilePhoto}
+          />
+          <Input
+            value={userDataBlank.firstName}
+            onChangeText={setFirstName}
+            label="Ім'я"
+            placeholder="Ваше ім'я"
+            style={styles.input}
+          />
+          <Input
+            value={userDataBlank.lastName}
+            onChangeText={setLastName}
+            label="Прізвище"
+            placeholder="Ваше прізвище"
+            style={styles.input}
+          />
+          <CitySelect
+            selectedCity={userDataBlank.city}
+            onCitySelect={setCity}
+            label="Місто"
+            placeholder="Оберіть місто"
+            style={styles.input}
+          />
+        </View>
+        <Button
+          onPress={navigateToMasterDataFillScreenOrSubmit}
+          disabled={!userDataFilled()}
+          style={styles.submit}
+        >
+          Продовжити
+        </Button>
+      </ScrollView>
     </SafeAreaLayout>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+  },
+  title: {
+    marginTop: 100,
   },
   inputsContainer: {
+    alignItems: 'center',
     width: '100%',
+    paddingHorizontal: 10,
+    marginTop: 100,
   },
   input: {
+    width: '100%',
     margin: 10,
   },
   submit: {
+    marginTop: 50,
     width: '50%',
   },
 });

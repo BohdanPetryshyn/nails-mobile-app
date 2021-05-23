@@ -8,6 +8,8 @@ export interface UserDataConstructorParams {
   city: City;
   bio?: string;
   profilePhoto: string;
+  firstName: string;
+  lastName: string;
 }
 
 @Exclude()
@@ -25,10 +27,28 @@ export class UserData {
   @IsUrl()
   profilePhoto: string;
 
-  constructor({ city, bio, profilePhoto }: UserDataConstructorParams) {
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  firstName: string;
+
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  lastName: string;
+
+  constructor({
+    city,
+    bio,
+    profilePhoto,
+    firstName,
+    lastName,
+  }: UserDataConstructorParams) {
     this.city = city;
     this.bio = bio;
     this.profilePhoto = profilePhoto;
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 
   async ensureProfilePhotoUploaded(): Promise<void> {

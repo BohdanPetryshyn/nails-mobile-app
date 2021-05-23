@@ -15,6 +15,7 @@ import selectRole from '../store/actions/selectRole';
 import { ClientData } from '../../user/entities/client-data';
 import useDefaultUserData from '../hooks/useDefaultUserData';
 import ScreenLoader from '../../common/components/ScreenLoader';
+import ProfilePhotoPicker from '../components/ProfilePhotoPicker';
 
 export default function ({
   navigation,
@@ -57,6 +58,10 @@ export default function ({
     <SafeAreaLayout style={styles.container}>
       <Text category="h5">Додайте деталей...</Text>
       <View style={styles.inputsContainer}>
+        <ProfilePhotoPicker
+          photoUri={userDataBlank.profilePhoto}
+          onPhotoUriChange={setProfilePhoto}
+        />
         <CitySelect
           selectedCity={userDataBlank.city}
           onCitySelect={setCity}

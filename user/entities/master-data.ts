@@ -20,8 +20,14 @@ export class MasterData extends UserData {
   @ValidateNested()
   services: Service[];
 
-  constructor({ city, bio, address, services }: MasterDataConstructorParams) {
-    super({ city, bio });
+  constructor({
+    city,
+    bio,
+    profilePhoto,
+    address,
+    services,
+  }: MasterDataConstructorParams) {
+    super({ city, bio, profilePhoto });
     this.address = address;
     this.services = services;
   }

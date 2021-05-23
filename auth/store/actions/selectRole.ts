@@ -10,6 +10,8 @@ export default (
   role: Role,
   userData: ClientData | MasterData,
 ): AppThunk => async dispatch => {
+  await userData.ensureProfilePhotoUploaded();
+
   const authResponse = await RolesService.selectRole(role, userData);
   const updatedAccessToken = authResponse.accessToken;
 

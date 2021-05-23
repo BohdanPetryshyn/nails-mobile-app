@@ -6,7 +6,7 @@ interface ClientDataConstructorParams extends UserDataConstructorParams {}
 
 @Exclude()
 export class ClientData extends UserData {
-  constructor({ city, bio }: ClientDataConstructorParams) {
-    super({ city, bio });
+  constructor({ city, bio, profilePhoto }: ClientDataConstructorParams) {
+    super({ city, bio, profilePhoto });
   }
 }

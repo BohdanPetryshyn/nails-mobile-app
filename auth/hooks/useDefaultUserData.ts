@@ -31,7 +31,7 @@ class UserDataBlank {
 
   bio?: string;
 
-  profilePhoto?: string;
+  profilePhoto: string;
 
   constructor({
     city,
@@ -40,7 +40,7 @@ class UserDataBlank {
   }: {
     city?: City;
     bio?: string;
-    profilePhoto?: string;
+    profilePhoto: string;
   }) {
     this.city = city;
     this.bio = bio;
@@ -48,7 +48,7 @@ class UserDataBlank {
   }
 
   isFilled(): boolean {
-    return Boolean(this.city && this.profilePhoto);
+    return Boolean(this.city);
   }
 
   toUserData(): UserData {

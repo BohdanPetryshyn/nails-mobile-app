@@ -13,7 +13,7 @@ export default function (): [
 
   useEffect(() => {
     async function fetchLoginData() {
-      const loginData = await AuthService.getMe();
+      const loginData = await AuthService.getMyLoginData();
 
       setUserData(
         new UserDataBlank({

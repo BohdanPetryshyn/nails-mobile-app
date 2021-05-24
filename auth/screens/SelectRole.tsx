@@ -4,7 +4,7 @@ import { Button, ButtonProps, Text } from '@ui-kitten/components';
 import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LoginStackParamList } from '../navigation/types';
-import { Role } from '../entities/Payload';
+import { Role } from '../../user/entities/user';
 
 export default function ({ navigation }: { navigation: NavigationProp }) {
   const navigateToUserDataFillScreen = (userRole: Role) => {

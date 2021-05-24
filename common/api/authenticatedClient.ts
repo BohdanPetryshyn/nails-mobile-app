@@ -10,6 +10,8 @@ function addAuthHeaderFromStore(
 ): AxiosRequestConfig {
   const accessToken = selectAccessToken(store.getState());
 
+  console.log('ACCESS_TOKEN', accessToken);
+
   if (!accessToken) {
     throw new Error(
       `Access tokes was not defined in store. AccessToken: ${accessToken}`,

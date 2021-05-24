@@ -7,13 +7,12 @@ import { City } from '../../user/entities/city';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { LoginStackParamList } from '../navigation/types';
-import { Role } from '../entities/Payload';
 import { useAppDispatch } from '../../common/store/hooks';
 import selectRole from '../store/actions/selectRole';
-import { ClientData } from '../../user/entities/client-data';
 import useDefaultUserData from '../hooks/useDefaultUserData';
 import ScreenLoader from '../../common/components/ScreenLoader';
 import ProfilePhotoPicker from '../components/ProfilePhotoPicker';
+import { Role } from '../../user/entities/user';
 
 export default function ({
   navigation,
@@ -56,7 +55,7 @@ export default function ({
     if (userRole === Role.MASTER) {
       navigation.navigate('FillMasterData', { userData });
     } else if (userRole === Role.CLIENT) {
-      dispatch(selectRole(Role.CLIENT, new ClientData(userData)));
+      dispatch(selectRole(Role.CLIENT, userData));
     }
   };
 

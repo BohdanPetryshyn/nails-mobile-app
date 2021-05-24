@@ -8,6 +8,6 @@ export class AuthService {
     const url = `${BASE_PATH}/my-login-data`;
     const userResponse = await authenticatedClient.get(url);
 
-    return new LoginData(userResponse.data);
+    return userResponse.data;
   }
 }

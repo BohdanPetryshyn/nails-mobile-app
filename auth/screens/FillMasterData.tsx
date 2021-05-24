@@ -6,11 +6,10 @@ import { LoginStackParamList } from '../navigation/types';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from '@ui-kitten/components';
 import { useAppDispatch } from '../../common/store/hooks';
-import { MasterData } from '../../user/entities/master-data';
 import selectRole from '../store/actions/selectRole';
-import { Role } from '../entities/Payload';
 import { ServiceBlank } from '../components/ServiceInputGroup';
 import MultipleServicesInputGroup from '../components/MultipleServicesInputGroup';
+import { Role } from '../../user/entities/user';
 
 export default function ({ route }: { route: FillMasterDataRouteProp }) {
   const dispatch = useAppDispatch();
@@ -28,11 +27,12 @@ export default function ({ route }: { route: FillMasterDataRouteProp }) {
   };
 
   const submit = () => {
-    const masterData = new MasterData({
+    const masterData = {
       ...route.params.userData,
       address: address!,
       services: services.map(service => service.toService()),
-    });
+      workingHours: [],
+    };
 
     dispatch(selectRole(Role.MASTER, masterData));
   };

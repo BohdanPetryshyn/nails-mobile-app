@@ -1,5 +1,5 @@
 import { UserData } from '../../user/entities/user-data';
-import { Role } from '../entities/Payload';
+import { Role } from '../../user/entities/user';
 
 export type LoginStackParamList = {
   Login: undefined;

@@ -64,10 +64,10 @@ class UserDataBlank {
   }
 
   toUserData(): UserData {
-    return new UserData({
+    return {
       ...this,
       city: this.city!,
-    });
+    };
   }
 
   withCity(city: City): UserDataBlank {

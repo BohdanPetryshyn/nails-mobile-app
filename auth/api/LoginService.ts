@@ -9,6 +9,6 @@ export class LoginService {
   ): Promise<AuthResponse> {
     const url = `${BASE_PATH}/google`;
     const response = await appClient.post(url, { accessToken });
-    return AuthResponse.fromPlain(response.data);
+    return response.data;
   }
 }

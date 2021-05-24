@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../../common/store/types';
-import { Payload, Role } from '../entities/Payload';
+import { Payload, PayloadUtils } from '../entities/Payload';
+import { Role } from '../../user/entities/user';
 
 interface AuthState {
   accessToken?: string | null;
@@ -18,10 +19,10 @@ export const authSlice = createSlice({
       action: PayloadAction<{ accessToken: string | null }>,
     ) {
       const { accessToken } = action.payload;
-      const payload = accessToken && Payload.fromAccessToken(accessToken);
+      const payload = accessToken && PayloadUtils.fromAccessToken(accessToken);
 
       state.accessToken = accessToken;
-      state.payload = (payload && payload.toPlain()) || null;
+      state.payload = payload || null;
     },
   },
 });

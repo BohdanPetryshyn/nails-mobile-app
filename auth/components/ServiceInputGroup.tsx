@@ -3,7 +3,6 @@ import { StyleSheet, View, ViewProps } from 'react-native';
 import ServiceTypeSelect from './ServiceTypeSelect';
 import { ServiceType } from '../../user/entities/service-type';
 import MoneyInput from './MoneyInput';
-import { Service } from '../../user/entities/service';
 import DurationInput from './DurationInput';
 
 export default function ({
@@ -109,10 +108,10 @@ export class ServiceBlank {
   }
 
   toService() {
-    return new Service({
+    return {
       serviceType: this.serviceType!,
       price: this.price!,
       duration: this.duration!,
-    });
+    };
   }
 }

@@ -1,36 +1,11 @@
-import { Exclude, Expose, Type } from 'class-transformer';
-import { UserData, UserDataConstructorParams } from './user-data';
-import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import { UserData } from './user-data';
 import { Service } from './service';
+import { WorkingHours } from './working-hours';
 
-interface MasterDataConstructorParams extends UserDataConstructorParams {
-  address: string;
-  services: Service[];
-}
-
-@Exclude()
-export class MasterData extends UserData {
-  @Expose()
-  @IsString()
-  @IsNotEmpty()
+export interface MasterData extends UserData {
   address: string;
 
-  @Expose()
-  @Type(() => Service)
-  @ValidateNested()
   services: Service[];
 
-  constructor({
-    city,
-    bio,
-    profilePhoto,
-    address,
-    services,
-    firstName,
-    lastName,
-  }: MasterDataConstructorParams) {
-    super({ city, bio, profilePhoto, firstName, lastName });
-    this.address = address;
-    this.services = services;
-  }
+  workingHours: WorkingHours[];
 }

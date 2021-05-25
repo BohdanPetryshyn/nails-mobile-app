@@ -12,7 +12,18 @@ export default function ({
   const [visible, setVisible] = useState(false);
 
   const onSelect = (date: Date) => {
-    onDateSelect(date);
+    const normalizedDate = new Date(
+      Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+        date.getMilliseconds(),
+      ),
+    );
+    onDateSelect(normalizedDate);
     setVisible(false);
   };
 
@@ -23,7 +34,7 @@ export default function ({
       onPress={() => setVisible(true)}
       {...buttonProps}
     >
-      {date.toLocaleDateString()}
+      {date.toLocaleDateString('uk-ua')}
     </Button>
   );
 

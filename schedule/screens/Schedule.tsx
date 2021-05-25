@@ -54,11 +54,7 @@ export default function () {
 
   return (
     <SafeAreaLayout style={styles.container}>
-      <PopoverCalendar
-        date={selectedDay}
-        onDateSelect={setDay}
-        style={styles.calendar}
-      />
+      <PopoverCalendar date={selectedDay} onDateSelect={setDay} />
       {selectedDayWorkingHours ? (
         <DayAppointments
           workingHours={selectedDayWorkingHours}
@@ -74,8 +70,5 @@ export default function () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  calendar: {
-    width: '40%',
   },
 });

@@ -1,4 +1,5 @@
 import { Interval } from './interval';
+import { DateUtils } from '../../common/utils/DateUtils';
 
 export interface WorkingHours extends Interval {
   from: string;
@@ -33,27 +34,11 @@ export class WorkingHoursUtils {
     };
   }
 
-  static getDefaultFromTime(day: Date): Date {
-    return WorkingHoursUtils.getDayWithHours(day, 10);
-  }
-
   static getDefaultToTime(day: Date): Date {
-    return WorkingHoursUtils.getDayWithHours(day, 20);
+    return DateUtils.getDayWithHours(day, 20);
   }
 
   static getStartOfDay(date: Date): Date {
-    return WorkingHoursUtils.getDayWithUTCHours(date, 0);
-  }
-
-  static getDayWithHours(day: Date, hours: number): Date {
-    const date = new Date(day.getTime());
-    date.setHours(hours, 0, 0, 0);
-    return date;
-  }
-
-  static getDayWithUTCHours(day: Date, hours: number): Date {
-    const date = new Date(day.getTime());
-    date.setUTCHours(hours, 0, 0, 0);
-    return date;
+    return DateUtils.getDayWithUTCHours(date, 0);
   }
 }

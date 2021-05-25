@@ -6,3 +6,9 @@ export interface Appointment extends Interval {
   services: ServiceType[];
   price: number;
 }
+
+export class AppointmentUtils {
+  static isAppointment(interval: Interval): interval is Appointment {
+    return 'price' in interval;
+  }
+}

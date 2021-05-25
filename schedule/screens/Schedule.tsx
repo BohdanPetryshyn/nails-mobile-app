@@ -24,7 +24,11 @@ export default function () {
         new Date('2021-05-25T10:00:00Z'),
       ),
       clientFullName: 'Оксана Петришин',
-      services: [ServiceType.REMOVAL, ServiceType.COATING, ServiceType.COATING],
+      services: [
+        ServiceType.REMOVAL,
+        ServiceType.CLEANING,
+        ServiceType.COATING,
+      ],
       price: 800,
     },
     {
@@ -33,7 +37,7 @@ export default function () {
         new Date('2021-05-25T15:00:00Z'),
       ),
       clientFullName: 'Марія Вовк',
-      services: [ServiceType.COATING, ServiceType.COATING],
+      services: [ServiceType.CLEANING, ServiceType.COATING],
       price: 600,
     },
   ];

@@ -6,6 +6,7 @@ import {
 } from '../../user/entities/working-hours';
 import TimePicker from './TimePicker';
 import { Button } from '@ui-kitten/components';
+import { DateUtils } from '../../common/utils/DateUtils';
 
 export default function ({
   day,
@@ -15,9 +16,7 @@ export default function ({
   day: Date;
   onSubmit: (workingHours: WorkingHours) => void;
 } & ViewProps) {
-  const [fromTime, setFromTime] = useState(
-    WorkingHoursUtils.getDefaultFromTime(day),
-  );
+  const [fromTime, setFromTime] = useState(DateUtils.getDefaultFromTime(day));
   const [toTime, setToTime] = useState(WorkingHoursUtils.getDefaultToTime(day));
 
   const onFormSubmit = () => {

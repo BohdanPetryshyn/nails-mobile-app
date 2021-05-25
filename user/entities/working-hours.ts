@@ -1,4 +1,6 @@
-export interface WorkingHours {
+import { Interval } from './interval';
+
+export interface WorkingHours extends Interval {
   from: string;
 
   to: string;

@@ -52,5 +52,9 @@ export const { setDayWorkingHours } = scheduleState.actions;
 export const selectScheduleState = (state: AppState) => state.schedule;
 export const selectWorkingHours = (state: AppState) =>
   selectScheduleState(state).workingHours;
+export const selectDayWorkingHours = (day: Date) => (state: AppState) => {
+  const workingHours = selectWorkingHours(state);
+  return workingHours && workingHours[day.toUTCString()];
+};
 
 export const scheduleReducer = scheduleState.reducer;

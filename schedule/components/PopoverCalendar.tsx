@@ -23,7 +23,7 @@ export default function ({
       onPress={() => setVisible(true)}
       {...buttonProps}
     >
-      {`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}
+      {date.toLocaleDateString()}
     </Button>
   );
 

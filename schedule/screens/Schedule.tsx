@@ -7,6 +7,7 @@ import AddWorkingHoursBanner from '../components/AddWorkingHoursBanner';
 import { WorkingHoursUtils } from '../../user/entities/working-hours';
 import DayAppointments from '../components/DayAppointments';
 import { ServiceType } from '../../user/entities/service-type';
+import { StyleSheet } from 'react-native';
 
 export default function () {
   const [selectedDay, setDay] = useState<Date>(
@@ -40,11 +41,24 @@ export default function () {
       services: [ServiceType.CLEANING, ServiceType.COATING],
       price: 600,
     },
+    {
+      ...WorkingHoursUtils.fromDates(
+        new Date('2021-05-25T15:00:00Z'),
+        new Date('2021-05-25T17:00:00Z'),
+      ),
+      clientFullName: 'Марія Вовк',
+      services: [ServiceType.CLEANING, ServiceType.COATING],
+      price: 600,
+    },
   ];
 
   return (
-    <SafeAreaLayout style={{ flex: 1 }}>
-      <PopoverCalendar date={selectedDay} onDateSelect={setDay} />
+    <SafeAreaLayout style={styles.container}>
+      <PopoverCalendar
+        date={selectedDay}
+        onDateSelect={setDay}
+        style={styles.calendar}
+      />
       {selectedDayWorkingHours ? (
         <DayAppointments
           workingHours={selectedDayWorkingHours}
@@ -56,3 +70,12 @@ export default function () {
     </SafeAreaLayout>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  calendar: {
+    width: '40%',
+  },
+});

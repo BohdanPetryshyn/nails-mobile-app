@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, ViewProps } from 'react-native';
-import ServiceTypeSelect from './ServiceTypeSelect';
 import { ServiceType } from '../../user/entities/service-type';
 import MoneyInput from './MoneyInput';
 import DurationInput from './DurationInput';
+import ServiceTypeSelect from '../../common/components/ServiceTypeSelect';
 
 export default function ({
   service,

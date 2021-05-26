@@ -1,7 +1,7 @@
 import React from 'react';
 import { SelectProps } from '@ui-kitten/components';
 import { City, CITY_LABELS } from '../../user/entities/city';
-import EnumSelect from './EnumSelect';
+import EnumSelect from '../../common/components/EnumSelect';
 
 export default function ({
   selectedCity,

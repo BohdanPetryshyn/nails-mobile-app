@@ -1,9 +1,10 @@
 import { Interval } from './interval';
-import { ServiceType } from './service-type';
+import { Service } from './service';
 
 export interface Appointment extends Interval {
   clientFullName: string;
-  services: ServiceType[];
+  masterFullName: string;
+  services: Service[];
   price: number;
 }
 

@@ -24,7 +24,7 @@ export class WorkingHoursUtils {
 
   static getDay(workingHours: WorkingHours): Date {
     const from = new Date(workingHours.from);
-    return this.getStartOfDay(from);
+    return DateUtils.getStartOfDay(from);
   }
 
   static fromDates(from: Date, to: Date): WorkingHours {
@@ -36,9 +36,5 @@ export class WorkingHoursUtils {
 
   static getDefaultToTime(day: Date): Date {
     return DateUtils.getDayWithHours(day, 20);
-  }
-
-  static getStartOfDay(date: Date): Date {
-    return DateUtils.getDayWithUTCHours(date, 0);
   }
 }

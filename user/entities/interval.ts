@@ -18,7 +18,7 @@ export class IntervalUtils {
     workingHours: WorkingHours,
     appointments: Interval[],
   ): Interval[] {
-    const intervals = appointments
+    const intervals = [...appointments]
       .sort(IntervalUtils.compare)
       .reduce((intervals, nextAppointment) => {
         const from = this.last(intervals)?.to || workingHours.from;
@@ -27,7 +27,8 @@ export class IntervalUtils {
         return [...intervals, interval, nextAppointment];
       }, new Array<Interval>());
 
-    intervals.push({ from: this.last(intervals)!.to, to: workingHours.to });
+    const lastIntervalEnd = this.last(intervals)?.to || workingHours.from;
+    intervals.push({ from: lastIntervalEnd, to: workingHours.to });
 
     return intervals;
   }

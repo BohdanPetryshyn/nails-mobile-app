@@ -32,7 +32,7 @@ export default function ({
   ...cardProps
 }: { appointment: Appointment } & CardProps) {
   const servicesString = appointment.services
-    .map(service => SERVICE_TYPE_LABELS[service])
+    .map(service => SERVICE_TYPE_LABELS[service.serviceType])
     .join(', ');
   const priceString = `₴${appointment.price}`;
 

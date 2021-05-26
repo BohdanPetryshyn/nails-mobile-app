@@ -1,60 +1,48 @@
-import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../../common/store/types';
-import {
-  WorkingHours,
-  WorkingHoursUtils,
-} from '../../user/entities/working-hours';
-import { Client } from '../../user/entities/client';
-import { Master } from '../../user/entities/master';
-import { User } from '../../user/entities/user';
+import { Appointment } from '../../user/entities/appointment';
 
 interface ScheduleState {
-  workingHours?: Record<string, WorkingHours>;
+  appointments: Record<string, Appointment[]>;
 }
 
-const initialState: ScheduleState = {};
-
-export const clientReceived = createAction<{ client: Client }>(
-  'clientReceived',
-);
-export const masterReceived = createAction<{ master: Master }>(
-  'masterReceived',
-);
-export const userReceived = createAction<{ user: User }>('userReceived');
+const initialState: ScheduleState = {
+  appointments: {},
+};
 
 export const scheduleState = createSlice({
   name: 'schedule',
   initialState,
   reducers: {
-    setDayWorkingHours(
+    setDayAppointments(
       state,
-      action: PayloadAction<{ day: string; workingHours: WorkingHours }>,
+      action: PayloadAction<{ day: string; appointments: Appointment[] }>,
     ) {
-      const { day, workingHours } = action.payload;
+      const { day, appointments } = action.payload;
 
-      if (state.workingHours) {
-        state.workingHours[day] = workingHours;
+      state.appointments[day] = appointments;
+    },
+    addDayAppointment(
+      state,
+      action: PayloadAction<{ day: string; appointment: Appointment }>,
+    ) {
+      const { day, appointment } = action.payload;
+
+      if (state.appointments[day]) {
+        state.appointments[day]?.push(appointment);
+      } else {
+        state.appointments[day] = [appointment];
       }
     },
   },
-  extraReducers: builder => {
-    builder.addCase(masterReceived, (state, action) => {
-      const { master } = action.payload;
-      const workingHours = master.masterData.workingHours;
-
-      state.workingHours = WorkingHoursUtils.indexByDay(workingHours);
-    });
-  },
 });
 
-export const { setDayWorkingHours } = scheduleState.actions;
+export const { setDayAppointments, addDayAppointment } = scheduleState.actions;
 
 export const selectScheduleState = (state: AppState) => state.schedule;
-export const selectWorkingHours = (state: AppState) =>
-  selectScheduleState(state).workingHours;
-export const selectDayWorkingHours = (day: Date) => (state: AppState) => {
-  const workingHours = selectWorkingHours(state);
-  return workingHours && workingHours[day.toUTCString()];
-};
+export const selectAppointments = (state: AppState) =>
+  selectScheduleState(state).appointments;
+export const selectDayAppointments = (day: Date) => (state: AppState) =>
+  selectAppointments(state)[day.toUTCString()];
 
 export const scheduleReducer = scheduleState.reducer;

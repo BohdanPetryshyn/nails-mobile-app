@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Appointment, AppointmentUtils } from '../../user/entities/appointment';
 import { WorkingHours } from '../../user/entities/working-hours';
 import { Interval, IntervalUtils } from '../../user/entities/interval';
 import AppointmentCard from './AppointmentCard';
 import { Layout } from '@ui-kitten/components';
+import { useAppDispatch, useAppSelector } from '../../common/store/hooks';
+import { selectDayAppointments } from '../store/slice';
+import fetchDayAppointments from '../store/actions/fetchDayAppointments';
+import ScreenLoader from '../../common/components/ScreenLoader';
 
 export default function ({
+  day,
   workingHours,
-  appointments,
 }: {
+  day: Date;
   workingHours: WorkingHours;
-  appointments: Appointment[];
 }) {
+  const dispatch = useAppDispatch();
+  const appointments = useAppSelector(selectDayAppointments(day));
+
+  useEffect(() => {
+    if (!appointments) {
+      dispatch(fetchDayAppointments(day));
+    }
+  }, [day]);
+
+  if (!appointments) {
+    return <ScreenLoader />;
+  }
+
   const intervals = IntervalUtils.toWorkingHoursIntervals(
     workingHours,
     appointments,

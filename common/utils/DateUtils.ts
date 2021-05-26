@@ -3,6 +3,10 @@ export class DateUtils {
     return this.getDayWithHours(day, 10);
   }
 
+  static getStartOfDayString(date: Date): string {
+    return this.getStartOfDay(date).toISOString();
+  }
+
   static getStartOfDay(date: Date): Date {
     return DateUtils.getDayWithUTCHours(date, 0, 0, 0, 0);
   }
@@ -34,5 +38,9 @@ export class DateUtils {
       hour: '2-digit',
       minute: '2-digit',
     });
+  }
+
+  static addMinutes(date: Date, minutes: number): Date {
+    return new Date(date.getTime() + minutes * 60_000);
   }
 }

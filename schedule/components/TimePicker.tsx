@@ -9,18 +9,22 @@ export default function ({
   label,
   ...datePickerProps
 }: {
-  time: Date;
-  onTimeChange: (date: Date) => void;
+  time?: Date;
+  onTimeChange?: (date: Date) => void;
   label?: string;
 } & DatepickerProps) {
+  const value = time || new Date();
+  const onChange = (event: unknown, date?: Date) =>
+    date && onTimeChange && onTimeChange(date);
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <DateTimePicker
         mode={'time'}
         is24Hour={false}
-        value={time}
-        onChange={(event, date) => date && onTimeChange(date)}
+        value={value}
+        onChange={onChange}
         style={styles.timePicker}
         {...datePickerProps}
       />

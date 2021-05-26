@@ -13,8 +13,6 @@ export default function () {
     DateUtils.getStartOfDay(new Date()),
   );
 
-  console.log('SELECTED_DAY: ', selectedDay);
-
   const selectedDayWorkingHours = useSelector(
     selectDayWorkingHours(selectedDay),
   );

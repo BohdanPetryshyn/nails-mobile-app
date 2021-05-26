@@ -27,5 +27,5 @@ export default (day: Date): AppThunk => async (dispatch, getState) => {
           to,
         );
 
-  dispatch(setDayAppointments({ appointments, day: day.toUTCString() }));
+  dispatch(setDayAppointments({ appointments, day: day.toISOString() }));
 };

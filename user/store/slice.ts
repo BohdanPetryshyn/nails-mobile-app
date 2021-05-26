@@ -55,17 +55,19 @@ export const {
 export const selectUserState = (state: AppState) => state.user;
 export const selectLoginData = (state: AppState) =>
   selectUserState(state).loginData;
+export const selectUserEmail = (state: AppState) =>
+  selectLoginData(state)?.email;
 export const selectClientData = (state: AppState) =>
   selectUserState(state).clientData;
 export const selectMasterData = (state: AppState) =>
   selectUserState(state).masterData;
-export const selectUserEmail = (state: AppState) =>
-  selectLoginData(state)?.email;
 export const selectWorkingHours = (state: AppState) =>
   selectMasterData(state)?.workingHours;
+export const selectMasterServices = (state: AppState) =>
+  selectMasterData(state)?.services;
 export const selectDayWorkingHours = (day: Date) => (state: AppState) => {
   const workingHours = selectWorkingHours(state);
-  return workingHours && workingHours[day.toUTCString()];
+  return workingHours && workingHours[day.toISOString()];
 };
 
 export const userReducer = slice.reducer;

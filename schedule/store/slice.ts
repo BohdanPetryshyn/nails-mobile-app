@@ -43,6 +43,6 @@ export const selectScheduleState = (state: AppState) => state.schedule;
 export const selectAppointments = (state: AppState) =>
   selectScheduleState(state).appointments;
 export const selectDayAppointments = (day: Date) => (state: AppState) =>
-  selectAppointments(state)[day.toUTCString()];
+  selectAppointments(state)[day.toISOString()];
 
 export const scheduleReducer = scheduleState.reducer;

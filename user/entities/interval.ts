@@ -1,4 +1,5 @@
 import { WorkingHours } from './working-hours';
+import { DateUtils } from '../../common/utils/DateUtils';
 
 export interface Interval {
   from: string;
@@ -12,6 +13,15 @@ export class IntervalUtils {
     const fromDate2 = new Date(interval2.from);
 
     return fromDate1.getTime() - fromDate2.getTime();
+  }
+
+  static getDayString(interval: Interval): string {
+    return this.getDay(interval).toISOString();
+  }
+
+  static getDay(interval: Interval): Date {
+    const from = new Date(interval.from);
+    return DateUtils.getStartOfDay(from);
   }
 
   static toWorkingHoursIntervals(

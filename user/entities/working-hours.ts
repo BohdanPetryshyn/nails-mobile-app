@@ -1,4 +1,4 @@
-import { Interval } from './interval';
+import { Interval, IntervalUtils } from './interval';
 import { DateUtils } from '../../common/utils/DateUtils';
 
 export interface WorkingHours extends Interval {
@@ -12,25 +12,16 @@ export class WorkingHoursUtils {
     workingHours: WorkingHours[],
   ): Record<string, WorkingHours> {
     return workingHours.reduce((result, wh) => {
-      const day = WorkingHoursUtils.getDayString(wh);
+      const day = IntervalUtils.getDayString(wh);
 
       return { ...result, [day]: wh };
     }, {} as Record<string, WorkingHours>);
   }
 
-  static getDayString(workingHours: WorkingHours): string {
-    return WorkingHoursUtils.getDay(workingHours).toUTCString();
-  }
-
-  static getDay(workingHours: WorkingHours): Date {
-    const from = new Date(workingHours.from);
-    return DateUtils.getStartOfDay(from);
-  }
-
   static fromDates(from: Date, to: Date): WorkingHours {
     return {
-      from: from.toUTCString(),
-      to: to.toUTCString(),
+      from: from.toISOString(),
+      to: to.toISOString(),
     };
   }
 

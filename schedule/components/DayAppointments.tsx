@@ -38,6 +38,8 @@ export default function ({
     appointments,
   );
 
+  console.log('intervals: ', intervals);
+
   const getRelativeHeight = (interval: Interval) => {
     const intervalDuration = IntervalUtils.getDurationMillis(interval);
     const dayDuration = IntervalUtils.getDurationMillis(workingHours);

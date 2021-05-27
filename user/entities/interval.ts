@@ -34,7 +34,9 @@ export class IntervalUtils {
         const from = this.last(intervals)?.to || workingHours.from;
         const to = nextAppointment.from;
         const interval = { from, to };
-        return [...intervals, interval, nextAppointment];
+        return this.isEmpty(interval)
+          ? [...intervals, nextAppointment]
+          : [...intervals, interval, nextAppointment];
       }, new Array<Interval>());
 
     const lastIntervalEnd = this.last(intervals)?.to || workingHours.from;
@@ -48,6 +50,13 @@ export class IntervalUtils {
     const toDate = new Date(interval.to);
 
     return toDate.getTime() - fromDate.getTime();
+  }
+
+  static isEmpty(interval: Interval): boolean {
+    const fromTime = new Date(interval.from).getTime();
+    const toTime = new Date(interval.to).getTime();
+
+    return toTime <= fromTime;
   }
 
   private static last<T>(array: T[]): T | null {

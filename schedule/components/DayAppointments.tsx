@@ -21,8 +21,6 @@ export default function ({
   const dispatch = useAppDispatch();
   const appointments = useAppSelector(selectDayAppointments(day));
 
-  console.log('appointments: ', appointments);
-
   useEffect(() => {
     if (!appointments) {
       dispatch(fetchDayAppointments(day));
@@ -37,8 +35,6 @@ export default function ({
     workingHours,
     appointments,
   );
-
-  console.log('intervals: ', intervals);
 
   const getRelativeHeight = (interval: Interval) => {
     const intervalDuration = IntervalUtils.getDurationMillis(interval);

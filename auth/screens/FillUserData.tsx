@@ -45,6 +45,10 @@ export default function ({
     setUserData(userDataBlank.withLastName(lastName));
   };
 
+  const setBio = (bio: string) => {
+    setUserData(userDataBlank.withBio(bio));
+  };
+
   const userDataFilled = () => {
     return userDataBlank.isFilled();
   };
@@ -94,6 +98,15 @@ export default function ({
             placeholder="Оберіть місто"
             style={styles.input}
           />
+          <Input
+            value={userDataBlank.bio}
+            onChangeText={setBio}
+            label="Про себе"
+            placeholder="Розкажіть про себе"
+            multiline={true}
+            style={styles.input}
+            textStyle={styles.multiline}
+          />
         </View>
         <Button
           onPress={navigateToMasterDataFillScreenOrSubmit}
@@ -123,6 +136,9 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     margin: 10,
+  },
+  multiline: {
+    minHeight: 64,
   },
   submit: {
     marginTop: 50,

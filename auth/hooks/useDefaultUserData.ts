@@ -97,4 +97,11 @@ class UserDataBlank {
       lastName,
     });
   }
+
+  withBio(bio: string): UserDataBlank {
+    return new UserDataBlank({
+      ...this,
+      bio,
+    });
+  }
 }

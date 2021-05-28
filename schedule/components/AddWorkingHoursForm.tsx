@@ -4,9 +4,9 @@ import {
   WorkingHours,
   WorkingHoursUtils,
 } from '../../user/entities/working-hours';
-import TimePicker from './TimePicker';
 import { Button } from '@ui-kitten/components';
 import { DateUtils } from '../../common/utils/DateUtils';
+import TimePicker from '../../common/components/TimePicker';
 
 export default function ({
   day,

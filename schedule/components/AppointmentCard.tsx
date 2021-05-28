@@ -1,9 +1,9 @@
 import React from 'react';
 import { Appointment } from '../../user/entities/appointment';
 import { Card, CardProps, Text } from '@ui-kitten/components';
-import { SERVICE_TYPE_LABELS } from '../../user/entities/service-type';
 import { View, ViewProps } from 'react-native';
 import { DateUtils } from '../../common/utils/DateUtils';
+import { MasterDataUtils } from '../../user/entities/master-data';
 
 function Header({
   name,
@@ -31,10 +31,10 @@ export default function ({
   appointment,
   ...cardProps
 }: { appointment: Appointment } & CardProps) {
-  const servicesString = appointment.services
-    .map(service => SERVICE_TYPE_LABELS[service.serviceType])
-    .join(', ');
-  const priceString = `₴${appointment.price}`;
+  const services = appointment.services.map(service => service.serviceType);
+  const servicesString = MasterDataUtils.getServicesString(services);
+
+  const priceString = MasterDataUtils.getPriceString(appointment.price);
 
   return (
     <Card

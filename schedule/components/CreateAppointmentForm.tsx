@@ -3,10 +3,10 @@ import { ServiceType } from '../../user/entities/service-type';
 import { Button, Input, Layout } from '@ui-kitten/components';
 import { Service, ServiceUtils } from '../../user/entities/service';
 import { StyleSheet, View } from 'react-native';
-import TimePicker from './TimePicker';
 import { DateUtils } from '../../common/utils/DateUtils';
 import ServiceTypeSelect from '../../common/components/ServiceTypeSelect';
 import { MasterAppointmentCreateRequest } from '../store/actions/addAppointment';
+import TimePicker from '../../common/components/TimePicker';
 
 export default function ({
   minFrom,

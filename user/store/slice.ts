@@ -59,6 +59,8 @@ export const selectUserEmail = (state: AppState) =>
   selectLoginData(state)?.email;
 export const selectClientData = (state: AppState) =>
   selectUserState(state).clientData;
+export const selectClientCity = (state: AppState) =>
+  selectClientData(state)?.city;
 export const selectMasterData = (state: AppState) =>
   selectUserState(state).masterData;
 export const selectWorkingHours = (state: AppState) =>

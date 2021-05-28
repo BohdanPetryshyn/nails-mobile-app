@@ -13,7 +13,9 @@ export default function ({
   }
   return (
     <View {...viewProps}>
-      <Text>{label}</Text>
+      <Text category="label" style={{ marginBottom: 5 }}>
+        {label}
+      </Text>
       <Text {...textProps}>{text}</Text>
     </View>
   );

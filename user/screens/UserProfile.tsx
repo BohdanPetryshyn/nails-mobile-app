@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
     marginVertical: 50,
   },
   additionalInfo: {
-    marginTop: 40,
+    marginTop: 50,
+    marginHorizontal: 5,
   },
 });
 

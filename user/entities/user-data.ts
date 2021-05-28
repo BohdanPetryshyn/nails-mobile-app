@@ -31,4 +31,8 @@ export class UserDataUtils {
 
     return userData;
   }
+
+  static getFullName(userData: UserData): string {
+    return `${userData.firstName} ${userData.lastName}`;
+  }
 }

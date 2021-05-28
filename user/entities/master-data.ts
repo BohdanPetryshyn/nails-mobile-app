@@ -23,4 +23,8 @@ export class MasterDataUtils {
   static getMinutesString(duration: number): string {
     return `${duration} хв`;
   }
+
+  static isMasterData(userData: UserData): userData is MasterData {
+    return 'workingHours' in userData;
+  }
 }

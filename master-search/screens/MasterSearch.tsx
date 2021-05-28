@@ -7,11 +7,20 @@ import { Divider } from '@ui-kitten/components';
 import MasterSearchResults from '../components/MasterSearchResults';
 import { useAppSelector } from '../../common/store/hooks';
 import { selectClientCity } from '../../user/store/slice';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { BottomTabParamList, RootStackParamList } from '../../navigation/types';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
-export default function () {
+export default function ({ navigation }: { navigation: NavigationProp }) {
   const userCity = useAppSelector(selectClientCity);
 
   const [filter, setFilter] = useState<FilterBlank>({ city: userCity });
+
+  const navigateToMasterProfile = (email: string) =>
+    navigation.navigate('UserProfile', {
+      email,
+    });
 
   return (
     <SafeAreaLayout style={styles.container}>
@@ -20,7 +29,10 @@ export default function () {
       </View>
       <Divider />
       {FilterUtils.isFilled(filter) && (
-        <MasterSearchResults filter={FilterUtils.toFilter(filter)} />
+        <MasterSearchResults
+          filter={FilterUtils.toFilter(filter)}
+          onMasterPress={navigateToMasterProfile}
+        />
       )}
     </SafeAreaLayout>
   );
@@ -35,3 +47,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
+
+type NavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<BottomTabParamList, 'MasterSearch'>,
+  StackNavigationProp<RootStackParamList>
+>;

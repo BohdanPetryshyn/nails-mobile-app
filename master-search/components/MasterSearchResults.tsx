@@ -6,7 +6,13 @@ import { MasterSearchResult } from '../entities/MasterSearchResult';
 import { MastersService } from '../../user/api/MastersService';
 import ScreenLoader from '../../common/components/ScreenLoader';
 
-export default function ({ filter }: { filter: Filter }) {
+export default function ({
+  filter,
+  onMasterPress,
+}: {
+  filter: Filter;
+  onMasterPress: (email: string) => void;
+}) {
   const [searchResults, setSearchResults] = useState<
     MasterSearchResult[] | undefined
   >([]);
@@ -27,7 +33,11 @@ export default function ({ filter }: { filter: Filter }) {
     <List
       data={searchResults}
       renderItem={searchResult => (
-        <MasterCard master={searchResult.item} key={searchResult.index} />
+        <MasterCard
+          master={searchResult.item}
+          key={searchResult.index}
+          onMasterPress={onMasterPress}
+        />
       )}
     />
   );

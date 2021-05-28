@@ -1,5 +1,5 @@
 import { MasterDataUtils } from '../../user/entities/master-data';
-import { Card, Text } from '@ui-kitten/components';
+import { Card, CardProps, Text } from '@ui-kitten/components';
 import React from 'react';
 import { MasterSearchResult } from '../entities/MasterSearchResult';
 import { View, ViewProps } from 'react-native';
@@ -20,7 +20,14 @@ function Header({
   );
 }
 
-export default function ({ master }: { master: MasterSearchResult }) {
+export default function ({
+  master,
+  onMasterPress,
+  ...cardProps
+}: {
+  master: MasterSearchResult;
+  onMasterPress: (masterEmail: string) => void;
+} & CardProps) {
   const availableServicesString = MasterDataUtils.getServicesString(
     master.availableServices,
   );
@@ -29,6 +36,7 @@ export default function ({ master }: { master: MasterSearchResult }) {
 
   return (
     <Card
+      {...cardProps}
       header={props => (
         <Header
           fullName={master.fullName}
@@ -36,6 +44,7 @@ export default function ({ master }: { master: MasterSearchResult }) {
           {...props}
         />
       )}
+      onPress={() => onMasterPress(master.masterEmail)}
     >
       <Text category="s1">{availableServicesString}</Text>
       <Text>{priceString}</Text>

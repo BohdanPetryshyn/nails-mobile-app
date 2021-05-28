@@ -1,0 +1,69 @@
+import React, { useEffect, useState } from 'react';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../navigation/types';
+import { UserData, UserDataUtils } from '../entities/user-data';
+import { Avatar, Divider, Text } from '@ui-kitten/components';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
+import ScreenLoader from '../../common/components/ScreenLoader';
+import { MasterDataUtils } from '../entities/master-data';
+import LabeledText from '../components/LabeledText';
+import { UsersService } from '../api/UsersService';
+
+export default function ({ route }: { route: FillMasterDataRouteProp }) {
+  const [userData, setUserData] = useState<UserData | undefined>(undefined);
+
+  useEffect(() => {
+    async function fetchUser() {
+      setUserData(undefined);
+      const userData = await UsersService.getUserData(route.params.email);
+
+      setUserData(userData);
+    }
+    fetchUser();
+  }, [route.params.email]);
+
+  if (!userData) {
+    return <ScreenLoader />;
+  }
+
+  return (
+    <SafeAreaLayout style={{ flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.container}
+      >
+        <Avatar
+          source={{ uri: userData?.profilePhoto }}
+          style={styles.profilePhoto}
+        />
+
+        <Text category="h5">{UserDataUtils.getFullName(userData)}</Text>
+        {MasterDataUtils.isMasterData(userData) && (
+          <Text>{userData.address}</Text>
+        )}
+        <Divider />
+
+        <View style={styles.additionalInfo}>
+          <LabeledText label="Про себе:" text={userData.bio} />
+        </View>
+      </ScrollView>
+    </SafeAreaLayout>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
+  profilePhoto: {
+    height: 200,
+    width: 200,
+    marginVertical: 50,
+  },
+  additionalInfo: {
+    marginTop: 40,
+  },
+});
+
+type FillMasterDataRouteProp = RouteProp<RootStackParamList, 'UserProfile'>;

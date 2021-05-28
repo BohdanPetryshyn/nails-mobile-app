@@ -14,6 +14,7 @@ import { selectIsLoggedIn } from '../auth/store/slice';
 import { LoginNavigator } from '../auth/navigation/LoginNavigator';
 import { RootStackParamList } from './types';
 import NotFoundScreen from '../common/screens/NotFoundScreen';
+import UserProfile from '../user/screens/UserProfile';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -41,7 +42,10 @@ function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isLoggedIn ? (
-        <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <>
+          <Stack.Screen name="Root" component={BottomTabNavigator} />
+          <Stack.Screen name="UserProfile" component={UserProfile} />
+        </>
       ) : (
         <Stack.Screen name="Login" component={LoginNavigator} />
       )}

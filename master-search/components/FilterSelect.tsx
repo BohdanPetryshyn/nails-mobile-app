@@ -31,18 +31,21 @@ export default function ({
       visible={visible}
       onBackdropPress={() => setVisible(false)}
     >
-      <Layout style={styles.container}>
+      <Layout level="2" style={styles.container}>
         <ServiceTypeSelect
           selectedServiceTypes={filter.services}
           onServiceTypesSelected={onServicesChange}
           multiSelect={true}
           label="Послуги"
           placeholder="Оберіть послуги"
+          style={[styles.input, styles.servicesSelect]}
         />
         <TimePicker
           time={filter.from}
           onTimeChange={onFromChange}
+          mode={'datetime'}
           label="Час візиту:"
+          style={[styles.input, styles.timePicker]}
         />
       </Layout>
     </Popover>
@@ -52,5 +55,14 @@ export default function ({
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  input: {
+    marginBottom: 10,
+  },
+  servicesSelect: {
+    width: '100%',
+  },
+  timePicker: {
+    width: 200,
   },
 });

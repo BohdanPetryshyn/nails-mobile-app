@@ -21,14 +21,14 @@ export default function ({
 } & SelectProps) {
   return (
     <EnumSelect
+      {...selectProps}
       selectedValue={selectedServiceType}
       onValueSelect={onServiceTypeSelected}
       selectedValues={selectedServiceTypes}
       onValuesSelect={onServiceTypesSelected}
       enumValues={ServiceType}
       enumLabels={SERVICE_TYPE_LABELS}
-      style={styles.select}
-      {...selectProps}
+      style={[styles.select, selectProps.style]}
     />
   );
 }

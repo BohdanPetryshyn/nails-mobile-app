@@ -9,10 +9,10 @@ interface ChatState {
 }
 
 interface MessagesState {
-  chats: Record<string, ChatState>;
+  chats?: Record<string, ChatState>;
 }
 
-const initialState: MessagesState = { chats: {} };
+const initialState: MessagesState = {};
 
 const slice = createSlice({
   name: 'messages',
@@ -34,7 +34,9 @@ const slice = createSlice({
     ) {
       const { toEmail, messages } = action.payload;
 
-      state.chats[toEmail].messages = messages;
+      if (state.chats) {
+        state.chats[toEmail].messages = messages;
+      }
     },
     chatMessageReceived(
       state,
@@ -42,19 +44,31 @@ const slice = createSlice({
     ) {
       const { toEmail, message } = action.payload;
 
-      state.chats[toEmail].messages?.push(message);
+      if (state.chats) {
+        state.chats[toEmail].messages?.push(message);
+      }
     },
   },
 });
 
+export const {
+  chatMessageReceived,
+  chatMessagesReceived,
+  chatPreviewsReceived,
+} = slice.actions;
+
 export const selectMessagesState = (state: AppState) => state.messages;
 export const selectChatStates = (state: AppState) =>
   selectMessagesState(state).chats;
-export const selectChatStatesArray = (state: AppState) =>
-  Object.values(selectChatStates(state));
+export const selectChatStatesArray = (state: AppState) => {
+  const chats = selectChatStates(state);
+  return chats && Object.values(chats);
+};
 export const selectChatPreviews = (state: AppState) =>
-  selectChatStatesArray(state).map(chat => chat.preview);
-export const selectChat = (toEmail: string) => (state: AppState) =>
-  selectChatStates(state)[toEmail];
+  selectChatStatesArray(state)?.map(chat => chat.preview);
+export const selectChat = (toEmail: string) => (state: AppState) => {
+  const chats = selectChatStates(state);
+  return chats && chats[toEmail];
+};
 
 export const messagesReducer = slice.reducer;

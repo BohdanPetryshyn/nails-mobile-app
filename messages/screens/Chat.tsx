@@ -1,56 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Keyboard, Platform } from 'react-native';
 import {
+  Avatar,
   Button,
   Icon,
   IconElement,
   IconProps,
   Input,
   StyleService,
+  TopNavigation,
+  TopNavigationAction,
   useStyleSheet,
 } from '@ui-kitten/components';
-import { Message } from '../entities/Message';
 import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
 import Chat from '../components/Chat';
 import { KeyboardAvoidingView } from '../../common/components/KeyboardAvoidingView';
-
-const initialMessages: Message[] = [
-  {
-    text: 'Hey, my name is Bohdan. I`d like to have a coating this week.',
-    fromEmail: 'b.y.petryshyn@gmail.com',
-    toEmail: 'elina.19.ua@gmail.com',
-    sentAt: '2021-05-29T09:08:31+0000',
-    isOut: false,
-  },
-  {
-    text: 'Hey, my name is Bohdan. I`d like to have a coating this week.',
-    fromEmail: 'b.y.petryshyn@gmail.com',
-    toEmail: 'elina.19.ua@gmail.com',
-    sentAt: '2021-05-29T09:08:31+0000',
-    isOut: false,
-  },
-  {
-    text: 'Hey, my name is Bohdan. I`d like to have a coating this week.',
-    fromEmail: 'b.y.petryshyn@gmail.com',
-    toEmail: 'elina.19.ua@gmail.com',
-    sentAt: '2021-05-29T09:08:31+0000',
-    isOut: true,
-  },
-  {
-    text: 'Hey, my name is Bohdan. I`d like to have a coating this week.',
-    fromEmail: 'b.y.petryshyn@gmail.com',
-    toEmail: 'elina.19.ua@gmail.com',
-    sentAt: '2021-05-29T09:08:31+0000',
-    isOut: true,
-  },
-  {
-    text: 'Hey, my name is Bohdan. I`d like to have a coating this week.',
-    fromEmail: 'b.y.petryshyn@gmail.com',
-    toEmail: 'elina.19.ua@gmail.com',
-    sentAt: '2021-05-29T09:08:31+0000',
-    isOut: false,
-  },
-];
+import { useAppDispatch, useAppSelector } from '../../common/store/hooks';
+import { selectChat } from '../store/slice';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../navigation/types';
+import { fetchChatMessages } from '../store/actions/fetchChatMessages';
+import { StackNavigationProp } from '@react-navigation/stack';
+import ScreenLoader from '../../common/components/ScreenLoader';
+import { sendMessage } from '../store/actions/sendMessage';
 
 const keyboardOffset = (height: number): number =>
   Platform.select({
@@ -62,10 +34,29 @@ const PaperPlaneIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="paper-plane" />
 );
 
-export default function () {
-  const styles = useStyleSheet(themedStyles);
+const ArrowIosBackIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="arrow-ios-back" />
+);
 
-  const [messages, setMessages] = React.useState<Message[]>(initialMessages);
+export default function ({
+  route,
+  navigation,
+}: {
+  route: ChatRouteProp;
+  navigation: NavigationProp;
+}) {
+  const email = route.params.email;
+
+  const styles = useStyleSheet(themedStyles);
+  const dispatch = useAppDispatch();
+  const chatState = useAppSelector(selectChat(email))!;
+
+  useEffect(() => {
+    if (!chatState.messages) {
+      dispatch(fetchChatMessages(email));
+    }
+  }, [email]);
+
   const [message, setMessage] = React.useState<string>();
 
   const sendButtonEnabled = (): boolean => {
@@ -73,18 +64,47 @@ export default function () {
   };
 
   const onSendButtonPress = (): void => {
+    dispatch(sendMessage(email, { text: message! }));
     setMessage(undefined);
     Keyboard.dismiss();
   };
 
+  const onProfileActionPress = (): void => {
+    navigation.navigate('UserProfile', { email });
+  };
+
+  const renderBackAction = (): React.ReactElement => (
+    <TopNavigationAction icon={ArrowIosBackIcon} onPress={navigation.goBack} />
+  );
+
+  const renderProfileAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={renderProfileImage}
+      onPress={onProfileActionPress}
+    />
+  );
+
+  const renderProfileImage = (): React.ReactElement => (
+    <Avatar size="small" source={{ uri: chatState.preview.toProfilePhoto }} />
+  );
+
   return (
     <SafeAreaLayout style={styles.container}>
-      <Chat
-        style={styles.list}
-        contentContainerStyle={styles.listContent}
-        followEnd={true}
-        data={messages}
+      <TopNavigation
+        title={chatState.preview.toFullName}
+        accessoryLeft={renderBackAction}
+        accessoryRight={renderProfileAction}
       />
+      {chatState.messages ? (
+        <Chat
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+          followEnd={true}
+          data={chatState.messages}
+        />
+      ) : (
+        <ScreenLoader />
+      )}
       <KeyboardAvoidingView
         style={styles.messageInputContainer}
         offset={keyboardOffset}
@@ -136,3 +156,6 @@ const themedStyles = StyleService.create({
     height: 24,
   },
 });
+
+type ChatRouteProp = RouteProp<RootStackParamList, 'Chat'>;
+type NavigationProp = StackNavigationProp<RootStackParamList>;

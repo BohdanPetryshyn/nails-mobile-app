@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ListRenderItemInfo, StyleSheet } from 'react-native';
 import { List } from '@ui-kitten/components';
 import { ChatPreview } from '../entities/ChatPreview';
@@ -8,24 +8,26 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { BottomTabParamList, RootStackParamList } from '../../navigation/types';
-
-const initialChatPreviews: ChatPreview[] = [
-  {
-    toFullName: 'Богдан Петришин',
-    toProfilePhoto:
-      'https://lh3.googleusercontent.com/a/AATXAJwlDeEJVNqNm10H4sh6Q8DVUzzWxjhB3fQH0NvU=s96-c',
-    toEmail: 'b.y.petryshyn@gmail.com',
-    lastMessage: {
-      text: 'Hey, my name is Bohdan. I`d like to have a coating this week.',
-      fromEmail: 'b.y.petryshyn@gmail.com',
-      toEmail: 'elina.19.ua@gmail.com',
-      sentAt: '2021-05-29T09:08:31+0000',
-      isOut: false,
-    },
-  },
-];
+import { useAppDispatch, useAppSelector } from '../../common/store/hooks';
+import { selectChatPreviews } from '../store/slice';
+import { fetchChatPreviews } from '../store/actions/fetchChatPreviews';
+import ScreenLoader from '../../common/components/ScreenLoader';
 
 export default function ({ navigation }: { navigation: NavigationProp }) {
+  const dispatch = useAppDispatch();
+
+  const chats = useAppSelector(selectChatPreviews);
+
+  useEffect(() => {
+    if (chats === undefined) {
+      dispatch(fetchChatPreviews());
+    }
+  }, []);
+
+  if (chats === undefined) {
+    return <ScreenLoader />;
+  }
+
   const renderItem = (
     info: ListRenderItemInfo<ChatPreview>,
   ): React.ReactElement => {
@@ -41,11 +43,7 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
 
   return (
     <SafeAreaLayout style={styles.container}>
-      <List
-        style={styles.list}
-        data={initialChatPreviews}
-        renderItem={renderItem}
-      />
+      <List style={styles.list} data={chats} renderItem={renderItem} />
     </SafeAreaLayout>
   );
 }

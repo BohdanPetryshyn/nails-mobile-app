@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Avatar, ListItem, ListItemProps, Text } from '@ui-kitten/components';
 import { ChatPreview, ChatPreviewUtils } from '../entities/ChatPreview';
+import { MessageUtils } from '../entities/Message';
 
 export default function ({
   chatPreview,
@@ -10,7 +11,7 @@ export default function ({
   const renderMessageDate = (): React.ReactElement => (
     <View style={styles.dateContainer}>
       <Text style={styles.dateText} appearance="hint" category="c1">
-        {ChatPreviewUtils.getDateString(chatPreview)}
+        {MessageUtils.getDateString(chatPreview.lastMessage)}
       </Text>
     </View>
   );

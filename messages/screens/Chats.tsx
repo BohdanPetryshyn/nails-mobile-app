@@ -4,6 +4,10 @@ import { List } from '@ui-kitten/components';
 import { ChatPreview } from '../entities/ChatPreview';
 import ChatItem from '../components/ChatItem';
 import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { BottomTabParamList, RootStackParamList } from '../../navigation/types';
 
 const initialChatPreviews: ChatPreview[] = [
   {
@@ -16,16 +20,24 @@ const initialChatPreviews: ChatPreview[] = [
       fromEmail: 'b.y.petryshyn@gmail.com',
       toEmail: 'elina.19.ua@gmail.com',
       sentAt: '2021-05-29T09:08:31+0000',
+      isOut: false,
     },
   },
 ];
 
-export default function () {
+export default function ({ navigation }: { navigation: NavigationProp }) {
   const renderItem = (
     info: ListRenderItemInfo<ChatPreview>,
-  ): React.ReactElement => (
-    <ChatItem style={styles.item} chatPreview={info.item} />
-  );
+  ): React.ReactElement => {
+    const chat = info.item;
+    return (
+      <ChatItem
+        style={styles.item}
+        chatPreview={chat}
+        onPress={() => navigation.navigate('Chat', { email: chat.toEmail })}
+      />
+    );
+  };
 
   return (
     <SafeAreaLayout style={styles.container}>
@@ -56,3 +68,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#c0c2ce',
   },
 });
+
+type NavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<BottomTabParamList, 'Chats'>,
+  StackNavigationProp<RootStackParamList>
+>;

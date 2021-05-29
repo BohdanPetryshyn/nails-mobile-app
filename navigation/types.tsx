@@ -4,6 +4,9 @@ export type RootStackParamList = {
   UserProfile: {
     email: string;
   };
+  Chat: {
+    email: string;
+  };
   NotFound: undefined;
 };
 

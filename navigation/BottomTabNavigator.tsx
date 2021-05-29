@@ -24,6 +24,26 @@ const tabIcon = (name: string) => (props: IconProps) => (
   <Icon {...props} name={name} />
 );
 
+interface TabProperties {
+  iconName: string;
+  title: string;
+}
+
+const TABS: Record<string, TabProperties> = {
+  Schedule: {
+    iconName: 'calendar-outline',
+    title: 'Розклад',
+  },
+  Chats: {
+    iconName: 'message-circle-outline',
+    title: 'Повідомлення',
+  },
+  MasterSearch: {
+    iconName: 'search-outline',
+    title: 'Майстри',
+  },
+};
+
 const TAB_BAR_PADDING = 20;
 
 function BottomTabBar({ navigation, state }: BottomTabBarProps) {
@@ -33,12 +53,13 @@ function BottomTabBar({ navigation, state }: BottomTabBarProps) {
       onSelect={index => navigation.navigate(state.routeNames[index])}
       style={{ paddingBottom: TAB_BAR_PADDING }}
     >
-      <BottomNavigationTab icon={tabIcon('calendar-outline')} title="Розклад" />
-      <BottomNavigationTab icon={tabIcon('search-outline')} title="Майстри" />
-      <BottomNavigationTab
-        icon={tabIcon('message-circle-outline')}
-        title="Повідомлення"
-      />
+      {state.routeNames.map(routeName => (
+        <BottomNavigationTab
+          icon={tabIcon(TABS[routeName].iconName)}
+          title={TABS[routeName].title}
+          key={routeName}
+        />
+      ))}
     </BottomNavigation>
   );
 }
@@ -57,12 +78,14 @@ export default function BottomTabNavigator() {
     <BottomTab.Navigator tabBar={BottomTabBar}>
       {userRole === Role.CLIENT ? (
         <>
-          <BottomTab.Screen name="Schedule" component={Schedule} />
           <BottomTab.Screen name="MasterSearch" component={MasterSearch} />
           <BottomTab.Screen name="Chats" component={Chats} />
         </>
       ) : (
-        <BottomTab.Screen name="Schedule" component={Schedule} />
+        <>
+          <BottomTab.Screen name="Schedule" component={Schedule} />
+          <BottomTab.Screen name="Chats" component={Chats} />
+        </>
       )}
     </BottomTab.Navigator>
   );

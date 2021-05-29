@@ -18,13 +18,10 @@ import { useSelector } from 'react-redux';
 import { selectUserRole } from '../auth/store/slice';
 import { Role } from '../user/entities/user';
 import MasterSearch from '../master-search/screens/MasterSearch';
+import Chats from '../messages/screens/Chats';
 
-const ScheduleIcon = (props: IconProps) => (
-  <Icon {...props} name="calendar-outline" />
-);
-
-const MasterSearchIcon = (props: IconProps) => (
-  <Icon {...props} name="search-outline" />
+const tabIcon = (name: string) => (props: IconProps) => (
+  <Icon {...props} name={name} />
 );
 
 const TAB_BAR_PADDING = 20;
@@ -36,8 +33,12 @@ function BottomTabBar({ navigation, state }: BottomTabBarProps) {
       onSelect={index => navigation.navigate(state.routeNames[index])}
       style={{ paddingBottom: TAB_BAR_PADDING }}
     >
-      <BottomNavigationTab icon={ScheduleIcon} title="Розклад" />
-      <BottomNavigationTab icon={MasterSearchIcon} title="Майстри" />
+      <BottomNavigationTab icon={tabIcon('calendar-outline')} title="Розклад" />
+      <BottomNavigationTab icon={tabIcon('search-outline')} title="Майстри" />
+      <BottomNavigationTab
+        icon={tabIcon('message-circle-outline')}
+        title="Повідомлення"
+      />
     </BottomNavigation>
   );
 }
@@ -58,6 +59,7 @@ export default function BottomTabNavigator() {
         <>
           <BottomTab.Screen name="Schedule" component={Schedule} />
           <BottomTab.Screen name="MasterSearch" component={MasterSearch} />
+          <BottomTab.Screen name="Chats" component={Chats} />
         </>
       ) : (
         <BottomTab.Screen name="Schedule" component={Schedule} />

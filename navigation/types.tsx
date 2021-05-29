@@ -10,4 +10,5 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Schedule: undefined;
   MasterSearch: undefined;
+  Chats: undefined;
 };

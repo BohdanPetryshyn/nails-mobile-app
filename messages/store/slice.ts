@@ -42,11 +42,16 @@ const slice = createSlice({
       state,
       action: PayloadAction<{ toEmail: string; message: Message }>,
     ) {
+      console.log('chatMessageReceived', action);
       const { toEmail, message } = action.payload;
 
-      if (state.chats) {
-        state.chats[toEmail].messages?.push(message);
-      }
+      const messages = state.chats && state.chats[toEmail].messages;
+      if (!messages) return;
+
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage.sentAt === message.sentAt) return;
+
+      messages.push(message);
     },
   },
 });

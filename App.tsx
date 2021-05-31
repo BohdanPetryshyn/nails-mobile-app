@@ -1,5 +1,5 @@
 import 'core-js/es7/reflect';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -13,6 +13,8 @@ import Navigation from './navigation';
 import { store } from './common/store/store';
 import useSecuredAccessToken from './auth/hooks/useSecuredAccessToken';
 import { accessTokenReceived } from './auth/store/slice';
+import { NotificationsService } from './common/device/NotificationsService';
+import subscribeToMessages from './messages/store/subscriptions/subscribeToMessages';
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -22,11 +24,19 @@ export default function App() {
 
   const isLoadingComplete = cachedResourcesLoaded && accessToken.ready;
 
+  useEffect(() => subscribeToMessages(), []);
+
+  useEffect(() => {
+    if (isLoadingComplete) {
+      store.dispatch(accessTokenReceived({ accessToken: accessToken.token }));
+      accessToken.token &&
+        NotificationsService.subscribeForNotifications(accessToken.token);
+    }
+  }, [isLoadingComplete]);
+
   if (!isLoadingComplete) {
     return null;
   } else {
-    store.dispatch(accessTokenReceived({ accessToken: accessToken.token }));
-
     return (
       <>
         <IconRegistry icons={EvaIconsPack} />

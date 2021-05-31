@@ -5,6 +5,19 @@ import { store } from '../store/store';
 
 const appClient = createAppClient();
 
+export function withAccessToken(
+  accessToken: string,
+  config: AxiosRequestConfig = {},
+): AxiosRequestConfig {
+  return {
+    ...config,
+    headers: {
+      ...config.headers,
+      ['Authorization']: `Bearer ${accessToken}`,
+    },
+  };
+}
+
 function addAuthHeaderFromStore(
   config: AxiosRequestConfig,
 ): AxiosRequestConfig {
@@ -18,13 +31,7 @@ function addAuthHeaderFromStore(
     );
   }
 
-  return {
-    ...config,
-    headers: {
-      ...config.headers,
-      ['Authorization']: `Bearer ${accessToken}`,
-    },
-  };
+  return withAccessToken(accessToken, config);
 }
 
 appClient.interceptors.request.use(addAuthHeaderFromStore);

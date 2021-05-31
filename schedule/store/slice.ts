@@ -34,10 +34,24 @@ export const scheduleState = createSlice({
         state.appointments[day] = [appointment];
       }
     },
+    deleteAppointment(
+      state,
+      action: PayloadAction<{ day: string; appointmentId: string }>,
+    ) {
+      const { day, appointmentId } = action.payload;
+
+      state.appointments[day] = state.appointments[day].filter(
+        appointment => appointment.id != appointmentId,
+      );
+    },
   },
 });
 
-export const { setDayAppointments, addDayAppointment } = scheduleState.actions;
+export const {
+  setDayAppointments,
+  addDayAppointment,
+  deleteAppointment,
+} = scheduleState.actions;
 
 export const selectScheduleState = (state: AppState) => state.schedule;
 export const selectAppointments = (state: AppState) =>

@@ -53,4 +53,10 @@ export class AppointmentsService {
 
     return appointmentResponse.data;
   }
+
+  static async deleteAppointment(appointmentId: string): Promise<void> {
+    const url = `${BASE_PATH}/${appointmentId}`;
+
+    await authenticatedClient.delete(url);
+  }
 }

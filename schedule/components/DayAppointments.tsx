@@ -14,8 +14,10 @@ import CreateAppointmentInterval from './CreateAppointmentInterval';
 export default function ({
   day,
   workingHours,
+  onAppointmentDelete,
 }: {
   day: Date;
+  onAppointmentDelete: (day: string, appointmentId: string) => void;
   workingHours: WorkingHours;
 }) {
   const dispatch = useAppDispatch();
@@ -49,6 +51,7 @@ export default function ({
           <AppointmentCard
             appointment={interval}
             style={{ ...styles.appointment, flex: getRelativeHeight(interval) }}
+            onAppointmentDelete={onAppointmentDelete}
             key={index}
           />
         ) : (

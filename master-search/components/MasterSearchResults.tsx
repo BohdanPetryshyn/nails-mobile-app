@@ -8,12 +8,15 @@ import ScreenLoader from '../../common/components/ScreenLoader';
 import { AppointmentCreateRequest } from '../../user/entities/appointment';
 import { selectUserEmail } from '../../user/store/slice';
 import { useAppSelector } from '../../common/store/hooks';
+import { Order, ORDER_COMP_FUNCTIONS } from '../entities/Order';
 
 export default function ({
   filter,
+  order,
   onMasterPress,
 }: {
   filter: Filter;
+  order: Order;
   onMasterPress: (createRequest: AppointmentCreateRequest) => void;
 }) {
   const clientEmail = useAppSelector(selectUserEmail)!;
@@ -31,11 +34,14 @@ export default function ({
     fetchSearchResult();
   }, [filter]);
 
+  const orderedResults =
+    searchResults && [...searchResults].sort(ORDER_COMP_FUNCTIONS[order]);
+
   return searchResults === undefined ? (
     <ScreenLoader />
   ) : (
     <List
-      data={searchResults}
+      data={orderedResults}
       renderItem={item => (
         <MasterCard
           master={item.item}

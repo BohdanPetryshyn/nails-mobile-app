@@ -12,11 +12,14 @@ import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabParamList, RootStackParamList } from '../../navigation/types';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { AppointmentCreateRequest } from '../../user/entities/appointment';
+import OrderSelect from '../components/OrderSelect';
+import { Order } from '../entities/Order';
 
 export default function ({ navigation }: { navigation: NavigationProp }) {
   const userCity = useAppSelector(selectClientCity);
 
   const [filter, setFilter] = useState<FilterBlank>({ city: userCity });
+  const [order, setOrder] = useState<Order>(Order.DURATION_ASC);
 
   const navigateToMasterProfile = (createRequest: AppointmentCreateRequest) =>
     navigation.navigate('UserProfile', {
@@ -28,11 +31,13 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
     <SafeAreaLayout style={styles.container}>
       <View style={styles.header}>
         <FilterSelect filter={filter} onFilterChange={setFilter} />
+        <OrderSelect selectedOrder={order} onOrderChange={setOrder} />
       </View>
       <Divider />
       {FilterUtils.isFilled(filter) && (
         <MasterSearchResults
           filter={FilterUtils.toFilter(filter)}
+          order={order}
           onMasterPress={navigateToMasterProfile}
         />
       )}
@@ -47,6 +52,7 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     flexDirection: 'row',
+    alignContent: 'space-around',
   },
 });
 

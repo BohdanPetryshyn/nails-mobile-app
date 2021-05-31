@@ -5,14 +5,18 @@ import { Filter } from '../entities/Filter';
 import { MasterSearchResult } from '../entities/MasterSearchResult';
 import { MastersService } from '../../user/api/MastersService';
 import ScreenLoader from '../../common/components/ScreenLoader';
+import { AppointmentCreateRequest } from '../../user/entities/appointment';
+import { selectUserEmail } from '../../user/store/slice';
+import { useAppSelector } from '../../common/store/hooks';
 
 export default function ({
   filter,
   onMasterPress,
 }: {
   filter: Filter;
-  onMasterPress: (email: string) => void;
+  onMasterPress: (createRequest: AppointmentCreateRequest) => void;
 }) {
+  const clientEmail = useAppSelector(selectUserEmail)!;
   const [searchResults, setSearchResults] = useState<
     MasterSearchResult[] | undefined
   >([]);
@@ -32,11 +36,18 @@ export default function ({
   ) : (
     <List
       data={searchResults}
-      renderItem={searchResult => (
+      renderItem={item => (
         <MasterCard
-          master={searchResult.item}
-          key={searchResult.index}
-          onMasterPress={onMasterPress}
+          master={item.item}
+          key={item.index}
+          onPress={() =>
+            onMasterPress({
+              masterEmail: item.item.masterEmail,
+              clientEmail,
+              from: filter.from.toISOString(),
+              services: item.item.availableServices,
+            })
+          }
         />
       )}
     />

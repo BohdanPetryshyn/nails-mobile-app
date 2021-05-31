@@ -9,19 +9,22 @@ import ScreenLoader from '../../common/components/ScreenLoader';
 import { MasterDataUtils } from '../entities/master-data';
 import LabeledText from '../components/LabeledText';
 import { UsersService } from '../api/UsersService';
+import CreateAppointmentButton from '../components/CreateAppointmentButton';
 
 export default function ({ route }: { route: FillMasterDataRouteProp }) {
   const [userData, setUserData] = useState<UserData | undefined>(undefined);
 
+  const { email, appointmentCreateRequest } = route.params;
+
   useEffect(() => {
     async function fetchUser() {
       setUserData(undefined);
-      const userData = await UsersService.getUserData(route.params.email);
+      const userData = await UsersService.getUserData(email);
 
       setUserData(userData);
     }
     fetchUser();
-  }, [route.params.email]);
+  }, [email]);
 
   if (!userData) {
     return <ScreenLoader />;
@@ -44,6 +47,13 @@ export default function ({ route }: { route: FillMasterDataRouteProp }) {
         )}
         <Divider />
 
+        {appointmentCreateRequest && (
+          <CreateAppointmentButton
+            createRequest={appointmentCreateRequest}
+            style={styles.action}
+          />
+        )}
+
         <View style={styles.additionalInfo}>
           <LabeledText label="Про себе:" text={userData.bio} />
         </View>
@@ -60,6 +70,9 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
     marginVertical: 50,
+  },
+  action: {
+    marginTop: 50,
   },
   additionalInfo: {
     marginTop: 50,

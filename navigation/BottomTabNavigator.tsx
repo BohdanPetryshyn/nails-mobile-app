@@ -20,6 +20,8 @@ import { Role } from '../user/entities/user';
 import MasterSearch from '../master-search/screens/MasterSearch';
 import Chats from '../messages/screens/Chats';
 import Photos from '../photos/screens/Photos';
+import { selectUserData } from '../user/store/slice';
+import ScreenLoader from '../common/components/ScreenLoader';
 
 const tabIcon = (name: string) => (props: IconProps) => (
   <Icon {...props} name={name} />
@@ -74,10 +76,13 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 export default function BottomTabNavigator() {
   const dispatch = useAppDispatch();
   const userRole = useSelector(selectUserRole);
+  const user = useSelector(selectUserData);
 
   useEffect(() => {
     dispatch(fetchUser());
   }, []);
+
+  if (!user) return <ScreenLoader />;
 
   return (
     <BottomTab.Navigator tabBar={BottomTabBar}>

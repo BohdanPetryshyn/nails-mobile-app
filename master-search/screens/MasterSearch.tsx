@@ -11,15 +11,17 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabParamList, RootStackParamList } from '../../navigation/types';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { AppointmentCreateRequest } from '../../user/entities/appointment';
 
 export default function ({ navigation }: { navigation: NavigationProp }) {
   const userCity = useAppSelector(selectClientCity);
 
   const [filter, setFilter] = useState<FilterBlank>({ city: userCity });
 
-  const navigateToMasterProfile = (email: string) =>
+  const navigateToMasterProfile = (createRequest: AppointmentCreateRequest) =>
     navigation.navigate('UserProfile', {
-      email,
+      email: createRequest.masterEmail,
+      appointmentCreateRequest: createRequest,
     });
 
   return (

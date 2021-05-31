@@ -22,11 +22,9 @@ function Header({
 
 export default function ({
   master,
-  onMasterPress,
   ...cardProps
 }: {
   master: MasterSearchResult;
-  onMasterPress: (masterEmail: string) => void;
 } & CardProps) {
   const availableServicesString = MasterDataUtils.getServicesString(
     master.availableServices,
@@ -44,7 +42,6 @@ export default function ({
           {...props}
         />
       )}
-      onPress={() => onMasterPress(master.masterEmail)}
     >
       <Text category="s1">{availableServicesString}</Text>
       <Text>{priceString}</Text>

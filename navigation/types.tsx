@@ -1,8 +1,11 @@
+import { AppointmentCreateRequest } from '../user/entities/appointment';
+
 export type RootStackParamList = {
   Root: undefined;
   Login: undefined;
   UserProfile: {
     email: string;
+    appointmentCreateRequest?: AppointmentCreateRequest;
   };
   Chat: {
     email: string;

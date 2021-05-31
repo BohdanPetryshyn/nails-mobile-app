@@ -17,6 +17,10 @@ export class UploadsService {
 
     await FileSystemService.uploadToS3(fileUri, uploadUrl);
 
-    return uploadUrl;
+    return this.truncateQueryParams(uploadUrl);
+  }
+
+  private static truncateQueryParams(uploadUrl: string) {
+    return uploadUrl.substring(0, uploadUrl.indexOf('?'));
   }
 }

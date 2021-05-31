@@ -1,53 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaLayout } from '../../common/components/SafeAreaLayout';
 import { ListRenderItemInfo, StyleSheet } from 'react-native';
 import { List, TopNavigation } from '@ui-kitten/components';
 import PublishedPhotoCard from '../components/PublishedPhotoCard';
 import { PublishedPhoto } from '../entities/PublishedPhoto';
 import PublishPhotoNavigationAction from '../components/PublishPhotoNavigationAction';
-
-const itemsStub: PublishedPhoto[] = [
-  {
-    photoUrl:
-      'https://images.ulta.com/is/image/Ulta/2564644_prod_altimg_4?op_sharpen=1&resMode=bilin&qlt=85&wid=800&hei=800&fmt=jpg',
-    userEmail: 'elina.19.ua@gmail.com',
-    userFullName: 'Еліна Нечаєва',
-    publishedDate: '2021-05-31T11:12:36+0000',
-    userProfilePhoto:
-      'https://salvemusic.com.ua/wp-content/uploads/2020/07/elina-nechayeva1-768x404.jpg',
-  },
-  {
-    photoUrl:
-      'https://images.ulta.com/is/image/Ulta/2564644_prod_altimg_4?op_sharpen=1&resMode=bilin&qlt=85&wid=800&hei=800&fmt=jpg',
-    userEmail: 'elina.19.ua@gmail.com',
-    userFullName: 'Еліна Нечаєва',
-    publishedDate: '2021-05-31T11:12:36+0000',
-    userProfilePhoto:
-      'https://salvemusic.com.ua/wp-content/uploads/2020/07/elina-nechayeva1-768x404.jpg',
-  },
-  {
-    photoUrl:
-      'https://images.ulta.com/is/image/Ulta/2564644_prod_altimg_4?op_sharpen=1&resMode=bilin&qlt=85&wid=800&hei=800&fmt=jpg',
-    userEmail: 'elina.19.ua@gmail.com',
-    userFullName: 'Еліна Нечаєва',
-    publishedDate: '2021-05-31T11:12:36+0000',
-    userProfilePhoto:
-      'https://salvemusic.com.ua/wp-content/uploads/2020/07/elina-nechayeva1-768x404.jpg',
-  },
-  {
-    photoUrl:
-      'https://images.ulta.com/is/image/Ulta/2564644_prod_altimg_4?op_sharpen=1&resMode=bilin&qlt=85&wid=800&hei=800&fmt=jpg',
-    userEmail: 'elina.19.ua@gmail.com',
-    userFullName: 'Еліна Нечаєва',
-    publishedDate: '2021-05-31T11:12:36+0000',
-    userProfilePhoto:
-      'https://salvemusic.com.ua/wp-content/uploads/2020/07/elina-nechayeva1-768x404.jpg',
-  },
-];
+import { PhotosService } from '../api/PhotosService';
+import ScreenLoader from '../../common/components/ScreenLoader';
+import { useAppDispatch } from '../../common/store/hooks';
+import publishPhoto from '../store/actions/publishPhoto';
 
 export const TAB_TITLE = 'Роботи';
 
 export default function () {
+  const dispatch = useAppDispatch();
+  const [photos, setPhotos] = useState<PublishedPhoto[]>();
+
+  useEffect(() => {
+    async function fetchPhotos() {
+      const photos = await PhotosService.getAll();
+      setPhotos(photos);
+    }
+    fetchPhotos();
+  }, []);
+
+  if (!photos) return <ScreenLoader />;
+
+  const onPhotoSelected = async (photoUrl: string) => {
+    const publishedPhoto = await dispatch(publishPhoto(photoUrl));
+    setPhotos([publishedPhoto, ...photos]);
+  };
+
   const renderItem = (item: ListRenderItemInfo<PublishedPhoto>) => (
     <PublishedPhotoCard publishedPhoto={item.item} />
   );
@@ -58,24 +41,13 @@ export default function () {
         alignment="center"
         title={TAB_TITLE}
         accessoryRight={() => (
-          <PublishPhotoNavigationAction
-            onPhotoSelected={uri =>
-              itemsStub.push({
-                photoUrl: uri,
-                userEmail: 'elina.19.ua@gmail.com',
-                userFullName: 'Еліна Нечаєва',
-                publishedDate: '2021-05-31T11:12:36+0000',
-                userProfilePhoto:
-                  'https://salvemusic.com.ua/wp-content/uploads/2020/07/elina-nechayeva1-768x404.jpg',
-              })
-            }
-          />
+          <PublishPhotoNavigationAction onPhotoSelected={onPhotoSelected} />
         )}
       />
       <List
         style={styles.list}
         contentContainerStyle={styles.listContent}
-        data={itemsStub}
+        data={photos}
         renderItem={renderItem}
       />
     </SafeAreaLayout>

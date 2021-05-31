@@ -10,7 +10,7 @@ export class ImagePickerService {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      quality: 1,
+      quality: 0.5,
     });
 
     return result.cancelled ? null : result.uri;

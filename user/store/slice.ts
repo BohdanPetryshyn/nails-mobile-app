@@ -4,6 +4,7 @@ import { ClientData } from '../entities/client-data';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../../common/store/types';
 import { WorkingHours, WorkingHoursUtils } from '../entities/working-hours';
+import { UserDataUtils } from '../entities/user-data';
 
 export interface UserState {
   loginData?: LoginData;
@@ -57,6 +58,16 @@ export const selectLoginData = (state: AppState) =>
   selectUserState(state).loginData;
 export const selectUserEmail = (state: AppState) =>
   selectLoginData(state)?.email;
+export const selectUserData = (state: AppState) => {
+  const userState = selectUserState(state);
+  return userState.clientData || userState.masterData;
+};
+export const selectUserFirstName = (state: AppState) =>
+  selectUserData(state)?.firstName;
+export const selectUserLastName = (state: AppState) =>
+  selectUserData(state)?.firstName;
+export const selectUserProfilePhoto = (state: AppState) =>
+  selectUserData(state)?.profilePhoto;
 export const selectClientData = (state: AppState) =>
   selectUserState(state).clientData;
 export const selectClientCity = (state: AppState) =>

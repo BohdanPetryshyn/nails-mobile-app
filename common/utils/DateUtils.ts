@@ -34,10 +34,29 @@ export class DateUtils {
   }
 
   static toLocalTimeString(time: Date): string {
-    return time.toLocaleTimeString('ua', {
+    return time.toLocaleTimeString('uk-ua', {
       hour: '2-digit',
       minute: '2-digit',
     });
+  }
+
+  static toLocaleDateString(date: Date): string {
+    return date.toLocaleDateString('uk-ua', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }
+
+  static toLocalDateTimeString(date: Date): string {
+    const localDate = date.toLocaleDateString('uk-ua', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    const localTime = this.toLocalTimeString(date);
+
+    return `${localDate} ${localTime}`;
   }
 
   static addMinutes(date: Date, minutes: number): Date {

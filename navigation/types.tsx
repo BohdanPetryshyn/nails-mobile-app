@@ -14,4 +14,5 @@ export type BottomTabParamList = {
   Schedule: undefined;
   MasterSearch: undefined;
   Chats: undefined;
+  Photos: undefined;
 };

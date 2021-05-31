@@ -19,6 +19,7 @@ import { selectUserRole } from '../auth/store/slice';
 import { Role } from '../user/entities/user';
 import MasterSearch from '../master-search/screens/MasterSearch';
 import Chats from '../messages/screens/Chats';
+import Photos from '../photos/screens/Photos';
 
 const tabIcon = (name: string) => (props: IconProps) => (
   <Icon {...props} name={name} />
@@ -41,6 +42,10 @@ const TABS: Record<string, TabProperties> = {
   MasterSearch: {
     iconName: 'search-outline',
     title: 'Майстри',
+  },
+  Photos: {
+    iconName: 'image-outline',
+    title: 'Роботи',
   },
 };
 
@@ -79,11 +84,13 @@ export default function BottomTabNavigator() {
       {userRole === Role.CLIENT ? (
         <>
           <BottomTab.Screen name="MasterSearch" component={MasterSearch} />
+          <BottomTab.Screen name="Photos" component={Photos} />
           <BottomTab.Screen name="Chats" component={Chats} />
         </>
       ) : (
         <>
           <BottomTab.Screen name="Schedule" component={Schedule} />
+          <BottomTab.Screen name="Photos" component={Photos} />
           <BottomTab.Screen name="Chats" component={Chats} />
         </>
       )}

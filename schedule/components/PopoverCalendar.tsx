@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, ButtonProps, Calendar, Popover } from '@ui-kitten/components';
+import { DateUtils } from '../../common/utils/DateUtils';
 
 export default function ({
   date,
@@ -34,7 +35,7 @@ export default function ({
       onPress={() => setVisible(true)}
       {...buttonProps}
     >
-      {date.toLocaleDateString('uk-ua')}
+      {DateUtils.toLocaleDateString(date)}
     </Button>
   );
 

@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@expo/metro-config": "^0.1.72",
     "@types/mime-types": "^2.1.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
@@ -74,6 +75,7 @@
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest-expo": "~40.0.0",
+    "metro-minify-terser": "^0.66.0",
     "prettier": "^2.2.1",
     "redux-devtools": "^3.7.0",
     "typescript": "~4.0.0"

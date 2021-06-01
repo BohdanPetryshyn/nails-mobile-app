@@ -10,6 +10,7 @@ export interface AppointmentCore {
 export interface Appointment extends Interval, AppointmentCore {
   id: string;
   clientFullName: string;
+  clientProfilePhoto: string;
   masterFullName: string;
   services: Service[];
   price: number;

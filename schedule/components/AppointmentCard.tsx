@@ -1,6 +1,6 @@
 import React from 'react';
 import { Appointment } from '../../user/entities/appointment';
-import { Button, Card, CardProps, Text } from '@ui-kitten/components';
+import { Avatar, Button, Card, CardProps, Text } from '@ui-kitten/components';
 import { View, ViewProps } from 'react-native';
 import { DateUtils } from '../../common/utils/DateUtils';
 import { MasterDataUtils } from '../../user/entities/master-data';
@@ -32,10 +32,13 @@ function Header({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 10,
-        marginLeft: 25,
       }}
     >
-      <View>
+      <Avatar
+        source={{ uri: appointment.clientProfilePhoto }}
+        style={{ marginLeft: 25 }}
+      />
+      <View style={{ flex: 1, marginLeft: 10 }}>
         <Text category="s1">{appointment.clientFullName}</Text>
         <Text>{timeString}</Text>
       </View>

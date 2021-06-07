@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppointmentCreateRequest } from '../entities/appointment';
-import { Button, ButtonProps } from '@ui-kitten/components';
+import { Button, ButtonProps, Tooltip } from '@ui-kitten/components';
 import { AppointmentsService } from '../../schedule/api/AppointmentsService';
 
 export default function ({
@@ -9,11 +9,27 @@ export default function ({
 }: {
   createRequest: AppointmentCreateRequest;
 } & ButtonProps) {
-  const createAppointment = () =>
-    AppointmentsService.createAppointment(createRequest);
-  return (
+  const [visible, setVisible] = useState(false);
+
+  const showTooltip = () => {
+    setTimeout(() => setVisible(true), 200);
+    setTimeout(() => setVisible(false), 1500);
+  };
+
+  const createAppointment = () => {
+    showTooltip();
+    return AppointmentsService.createAppointment(createRequest);
+  };
+
+  const renderButton = () => (
     <Button {...buttonProps} onPress={createAppointment}>
       Записатись
     </Button>
+  );
+
+  return (
+    <Tooltip anchor={renderButton} visible={visible}>
+      Ви успішно записались! 💅🏻
+    </Tooltip>
   );
 }

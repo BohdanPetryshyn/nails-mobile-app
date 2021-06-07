@@ -8,6 +8,17 @@ import { Client } from '../../user/entities/client';
 import { ClientsService } from '../../user/api/ClientsService';
 import { UserDataUtils } from '../../user/entities/user-data';
 import { UserUtils } from '../../user/entities/user';
+import { Keyboard, KeyboardEventName, Platform } from 'react-native';
+
+const showEvent = Platform.select({
+  android: 'keyboardDidShow',
+  default: 'keyboardWillShow',
+}) as KeyboardEventName;
+
+const hideEvent = Platform.select({
+  android: 'keyboardDidHide',
+  default: 'keyboardWillHide',
+}) as KeyboardEventName;
 
 export default function ({
   selectedEmail,
@@ -20,9 +31,24 @@ export default function ({
   const [results, setResults] = useState<Client[]>();
   const [resultsByEmail, setResultsByEmail] = useState<Map<string, Client>>();
   const [value, setValue] = useState<string>();
+  const [placement, setPlacement] = React.useState('bottom');
+
+  React.useEffect(() => {
+    const keyboardShowListener = Keyboard.addListener(showEvent, () => {
+      setPlacement('top');
+    });
+
+    const keyboardHideListener = Keyboard.addListener(hideEvent, () => {
+      setPlacement('bottom');
+    });
+
+    return () => {
+      keyboardShowListener.remove();
+      keyboardHideListener.remove();
+    };
+  });
 
   const fetchResults = async (query: string) => {
-    setResults(undefined);
     const results = await ClientsService.search(query);
     setResults(results);
     setResultsByEmail(UserUtils.indexByEmail(results));
@@ -54,6 +80,7 @@ export default function ({
       value={value}
       onSelect={onSelect}
       onChangeText={onChangeText}
+      placement={placement}
       {...autocompleteProps}
     >
       {results?.map((result, index) => (

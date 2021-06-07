@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { AppointmentUtils } from '../../user/entities/appointment';
+import { Appointment, AppointmentUtils } from '../../user/entities/appointment';
 import { WorkingHours } from '../../user/entities/working-hours';
 import { Interval, IntervalUtils } from '../../user/entities/interval';
 import AppointmentCard from './AppointmentCard';
@@ -14,9 +14,11 @@ import CreateAppointmentInterval from './CreateAppointmentInterval';
 export default function ({
   day,
   workingHours,
+  onAppointmentPress,
   onAppointmentDelete,
 }: {
   day: Date;
+  onAppointmentPress: (appointment: Appointment) => void;
   onAppointmentDelete: (day: string, appointmentId: string) => void;
   workingHours: WorkingHours;
 }) {
@@ -51,6 +53,7 @@ export default function ({
           <AppointmentCard
             appointment={interval}
             style={{ ...styles.appointment, flex: getRelativeHeight(interval) }}
+            onPress={() => onAppointmentPress(interval)}
             onAppointmentDelete={onAppointmentDelete}
             key={index}
           />

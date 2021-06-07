@@ -47,6 +47,8 @@ export default function ({
 }) {
   const email = route.params.email;
 
+  console.log('chat with', email);
+
   const styles = useStyleSheet(themedStyles);
   const dispatch = useAppDispatch();
   const chatState = useAppSelector(selectChat(email))!;

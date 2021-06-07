@@ -10,8 +10,16 @@ import { MasterDataUtils } from '../entities/master-data';
 import LabeledText from '../components/LabeledText';
 import { UsersService } from '../api/UsersService';
 import CreateAppointmentButton from '../components/CreateAppointmentButton';
+import StartConversationButton from '../components/StartConversationButton';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-export default function ({ route }: { route: FillMasterDataRouteProp }) {
+export default function ({
+  route,
+  navigation,
+}: {
+  route: FillMasterDataRouteProp;
+  navigation: NavigationProp;
+}) {
   const [userData, setUserData] = useState<UserData | undefined>(undefined);
 
   const { email, appointmentCreateRequest } = route.params;
@@ -48,10 +56,17 @@ export default function ({ route }: { route: FillMasterDataRouteProp }) {
         <Divider />
 
         {appointmentCreateRequest && (
-          <CreateAppointmentButton
-            createRequest={appointmentCreateRequest}
-            style={styles.action}
-          />
+          <View style={styles.masterActions}>
+            <CreateAppointmentButton createRequest={appointmentCreateRequest} />
+            <StartConversationButton
+              chatPreview={{
+                toEmail: email,
+                toFullName: UserDataUtils.getFullName(userData),
+                toProfilePhoto: userData.profilePhoto,
+              }}
+              navigation={navigation}
+            />
+          </View>
         )}
 
         <View style={styles.additionalInfo}>
@@ -71,8 +86,11 @@ const styles = StyleSheet.create({
     width: 200,
     marginVertical: 50,
   },
-  action: {
+  masterActions: {
     marginTop: 50,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
   additionalInfo: {
     marginTop: 50,
@@ -81,3 +99,4 @@ const styles = StyleSheet.create({
 });
 
 type FillMasterDataRouteProp = RouteProp<RootStackParamList, 'UserProfile'>;
+type NavigationProp = StackNavigationProp<RootStackParamList>;

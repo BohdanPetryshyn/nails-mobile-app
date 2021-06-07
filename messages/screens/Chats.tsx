@@ -19,9 +19,7 @@ export default function ({ navigation }: { navigation: NavigationProp }) {
   const chats = useAppSelector(selectChatPreviews);
 
   useEffect(() => {
-    if (chats === undefined) {
-      dispatch(fetchChatPreviews());
-    }
+    dispatch(fetchChatPreviews());
   }, []);
 
   if (chats === undefined) {

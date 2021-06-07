@@ -28,6 +28,30 @@ const slice = createSlice({
         return { ...resultPreviews, [preview.toEmail]: { preview } };
       }, {} as Record<string, ChatState>);
     },
+    addNewChatPreview(state, action: PayloadAction<{ preview: ChatPreview }>) {
+      const { preview } = action.payload;
+
+      if (!state.chats) {
+        state.chats = {};
+      }
+
+      if (!state.chats[preview.toEmail]) {
+        console.log('creating new chat');
+        state.chats[preview.toEmail] = { preview };
+      }
+    },
+    setLastMessage(
+      state,
+      action: PayloadAction<{ email: string; message: Message }>,
+    ) {
+      const { email, message } = action.payload;
+
+      const chats = state.chats || (state.chats = {});
+
+      const chatPreview = chats[email] && chats[email].preview;
+
+      chatPreview.lastMessage = message;
+    },
     chatMessagesReceived(
       state,
       action: PayloadAction<{ toEmail: string; messages: Message[] }>,
@@ -42,22 +66,38 @@ const slice = createSlice({
       state,
       action: PayloadAction<{ toEmail: string; message: Message }>,
     ) {
-      console.log('chatMessageReceived', action);
       const { toEmail, message } = action.payload;
 
-      const messages = state.chats && state.chats[toEmail].messages;
-      if (!messages) return;
+      const chats = state.chats || (state.chats = {});
+
+      const messages =
+        chats[toEmail].messages || (chats[toEmail].messages = []);
 
       const lastMessage = messages[messages.length - 1];
-      if (lastMessage.sentAt === message.sentAt) return;
+      if (lastMessage && lastMessage.sentAt === message.sentAt) return;
 
       messages.push(message);
+
+      chats[toEmail].preview.lastMessage = message;
+      //
+      // const { toEmail, message } = action.payload;
+      //
+      // if (!state.chats) return;
+      //
+      // const messages =
+      //   state.chats[toEmail].messages || (state.chats[toEmail].messages = []);
+      //
+      // const lastMessage = messages[messages.length - 1];
+      // if (lastMessage && lastMessage.sentAt === message.sentAt) return;
+      //
+      // messages.push(message);
     },
   },
 });
 
 export const {
   chatMessageReceived,
+  addNewChatPreview,
   chatMessagesReceived,
   chatPreviewsReceived,
 } = slice.actions;

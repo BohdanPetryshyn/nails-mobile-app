@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { ServiceType } from '../../user/entities/service-type';
-import { Button, Input, Layout } from '@ui-kitten/components';
+import { Autocomplete, Button, Input, Layout } from '@ui-kitten/components';
 import { Service, ServiceUtils } from '../../user/entities/service';
 import { StyleSheet, View } from 'react-native';
 import { DateUtils } from '../../common/utils/DateUtils';
 import ServiceTypeSelect from '../../common/components/ServiceTypeSelect';
 import { MasterAppointmentCreateRequest } from '../store/actions/addAppointment';
 import TimePicker from '../../common/components/TimePicker';
+import ClientSearchSelect from './ClientSearchSelect';
 
 export default function ({
   minFrom,
@@ -44,11 +45,11 @@ export default function ({
 
   return (
     <Layout style={styles.container}>
-      <Input
-        value={clientEmail}
-        onChangeText={setClientEmail}
-        label="Email клієнта"
-        placeholder="Введіть Email клієнта"
+      <ClientSearchSelect
+        selectedEmail={clientEmail}
+        onEmailSelect={setClientEmail}
+        label="Клієнт"
+        placeholder="Шукайте за іменем чи email"
         style={styles.input}
       />
       <View style={[styles.timeContainer, styles.input]}>

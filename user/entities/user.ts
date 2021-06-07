@@ -10,3 +10,9 @@ export interface User {
 
   role?: Role;
 }
+
+export class UserUtils {
+  static indexByEmail<T extends User>(users: T[]): Map<string, T> {
+    return new Map(users.map(user => [user.loginData.email, user]));
+  }
+}

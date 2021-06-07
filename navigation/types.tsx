@@ -18,4 +18,5 @@ export type BottomTabParamList = {
   MasterSearch: undefined;
   Chats: undefined;
   Photos: undefined;
+  UpdateProfile: undefined;
 };

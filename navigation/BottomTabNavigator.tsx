@@ -22,6 +22,7 @@ import Chats from '../messages/screens/Chats';
 import Photos from '../photos/screens/Photos';
 import { selectUserData } from '../user/store/slice';
 import ScreenLoader from '../common/components/ScreenLoader';
+import UpdateProfile from '../user/screens/UpdateProfile';
 
 const tabIcon = (name: string) => (props: IconProps) => (
   <Icon {...props} name={name} />
@@ -48,6 +49,10 @@ const TABS: Record<string, TabProperties> = {
   Photos: {
     iconName: 'image-outline',
     title: 'Роботи',
+  },
+  UpdateProfile: {
+    iconName: 'person-outline',
+    title: 'Профіль',
   },
 };
 
@@ -90,12 +95,14 @@ export default function BottomTabNavigator() {
         <>
           <BottomTab.Screen name="MasterSearch" component={MasterSearch} />
           <BottomTab.Screen name="Photos" component={Photos} />
+          <BottomTab.Screen name="UpdateProfile" component={UpdateProfile} />
           <BottomTab.Screen name="Chats" component={Chats} />
         </>
       ) : (
         <>
           <BottomTab.Screen name="Schedule" component={Schedule} />
           <BottomTab.Screen name="Photos" component={Photos} />
+          <BottomTab.Screen name="UpdateProfile" component={UpdateProfile} />
           <BottomTab.Screen name="Chats" component={Chats} />
         </>
       )}

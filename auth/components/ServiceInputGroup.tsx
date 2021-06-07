@@ -4,6 +4,7 @@ import { ServiceType } from '../../user/entities/service-type';
 import MoneyInput from './MoneyInput';
 import DurationInput from './DurationInput';
 import ServiceTypeSelect from '../../common/components/ServiceTypeSelect';
+import { Service } from '../../user/entities/service';
 
 export default function ({
   service,
@@ -85,6 +86,12 @@ export class ServiceBlank {
     this.serviceType = serviceType;
     this.price = price;
     this.duration = duration;
+  }
+
+  static fromService(service: Service) {
+    return new ServiceBlank({
+      ...service,
+    });
   }
 
   withServiceType(serviceType: ServiceType) {
